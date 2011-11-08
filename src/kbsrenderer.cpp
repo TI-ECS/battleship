@@ -9,7 +9,6 @@
 
 #include "kbsrenderer.h"
 #include <QSvgRenderer>
-#include <kdebug.h>
 #include <QPainter>
 
 KBSRenderer::KBSRenderer(const QString& path)

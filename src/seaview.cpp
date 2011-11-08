@@ -31,7 +31,7 @@ SeaView::SeaView(QWidget* parent)
     setAttribute(Qt::WA_NoSystemBackground);*/
 
     // create renderer
-    m_renderer = new KBSRenderer(":pictures/default_theme.svgz");
+    m_renderer = new KBSRenderer(":data/default_theme.svgz");
     m_renderer->resize(tileSize());
 
     // create screen

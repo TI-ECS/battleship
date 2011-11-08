@@ -9,8 +9,6 @@
 
 #include "battlefieldview.h"
 
-#include <kdebug.h>
-#include <kicon.h>
 
 #include "kbsrenderer.h"
 #include "sprite.h"

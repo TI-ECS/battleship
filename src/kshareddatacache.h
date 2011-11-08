@@ -23,6 +23,7 @@
 class QString;
 class QByteArray;
 
+int krandom();
 /**
  * @brief A simple data cache which uses shared memory to quickly access data
  * stored on disk.

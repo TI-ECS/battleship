@@ -1,7 +1,6 @@
 TEMPLATE = app
 
-# RESOURCES = battleship.qrc
-QT += gui svg xml
+QT += gui svg xml network
 DEPENDPATH += . src
 INCLUDEPATH += . src
 
@@ -31,6 +30,7 @@ message ("The application will be installed in $$INSTALLDIR")
 target.path = $$INSTALLDIR/usr/bin
 INSTALLS += target
 
+FORMS += ui/mainwindow.ui
 # Input
 HEADERS += src/animation.h \
            src/animator.h \
@@ -52,17 +52,20 @@ HEADERS += src/animation.h \
            src/kgamerendererclient.h \
            src/kshareddatacache.h \
            src/kshareddatacache_p.h \
-           ksharedptr.h \
+           src/ksharedptr.h \
            src/hitinfo.h \
+           src/mainwindow.h \
            src/message.h \
            src/networkentity.h \
            src/playerlabel.h \
            src/playerentity.h \
+           src/playfield.h \
            src/protocol.h \
            src/sea.h \
            src/seaview.h \
            src/ship.h \
            src/shot.h \
+           src/simplemenu.h \
            src/sprite.h \
            src/spritefactory.h \
            src/stats.h \
@@ -86,15 +89,18 @@ SOURCES += src/animation.cpp \
            src/kgamerendererclient.cpp \
            src/kshareddatacache.cpp \
            src/main.cpp \
+           src/mainwindow.cpp \
            src/message.cpp \
            src/networkentity.cpp \
            src/playerentity.cpp \
+           src/playfield.cpp \
            src/playerlabel.cpp \
            src/protocol.cpp \
            src/sea.cpp \
            src/seaview.cpp \
            src/ship.cpp \
            src/shot.cpp \
+           src/simplemenu.cpp \
            src/sprite.cpp \
            src/spritefactory.cpp \
            src/stats.cpp \

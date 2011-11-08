@@ -48,7 +48,7 @@
 #endif
 
 
-static int krandom()
+int krandom()
 {
     static bool init = false;
     if (!init)

@@ -10,7 +10,6 @@
 #include "animation.h"
 
 #include <kgamecanvas.h>
-#include <kdebug.h>
 
 Animation::~Animation()
 {

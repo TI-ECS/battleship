@@ -9,7 +9,6 @@
 
 #include "sprite.h"
 
-#include <kdebug.h>
 
 #include "kbsrenderer.h"
 
