@@ -63,30 +63,24 @@ void SimpleMenu::createServer()
 {
     QWidget* parent_widget = qobject_cast<QWidget*>(parent());
     Q_ASSERT(parent_widget);
-/*    NetworkDialog dialog(false, parent_widget);
-    if (dialog.exec()) {
-        finalize(DONE_SERVER, dialog.nickname(), dialog.socket());
-    }*/
+    //TODO get server socket
+//    NetworkDialog dialog(false, parent_widget);
+//    if (dialog.exec()) {
+    QTcpSocket *s = new QTcpSocket(this);
+    finalize(DONE_SERVER, "Me", s);
+//    }
 }
-
-// void SimpleMenu::createClient(const KUrl& url)
-// {
-//     QWidget* parent_widget = qobject_cast<QWidget*>(parent());
-//     Q_ASSERT(parent_widget);
-//     NetworkDialog dialog(true, parent_widget,&url);
-//     if (dialog.exec() == QDialog::Accepted) {
-//         finalize(DONE_CLIENT, dialog.nickname(), dialog.socket());
-//     }
-// }
 
 void SimpleMenu::createClient()
 {
     QWidget* parent_widget = qobject_cast<QWidget*>(parent());
     Q_ASSERT(parent_widget);
-/*    NetworkDialog dialog(true, parent_widget);
-    if (dialog.exec() == QDialog::Accepted) {
-        finalize(DONE_CLIENT, dialog.nickname(), dialog.socket());
-    }*/
+    //TODO getclient socket
+//     NetworkDialog dialog(true, parent_widget,&url);
+//     if (dialog.exec() == QDialog::Accepted) {
+    QTcpSocket *s = new QTcpSocket(this);
+    finalize(DONE_CLIENT, "Me", s);
+//     }
 }
 
 void SimpleMenu::setupController(Controller* controller, Entity* old_opponent, SeaView* sea,
