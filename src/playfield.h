@@ -58,6 +58,7 @@ signals:
     void gameFinished();
     void welcomeScreen();
     void startingGame();
+    void rotate();
 };
 
 #endif // PLAYFIELD_H

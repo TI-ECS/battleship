@@ -34,6 +34,7 @@ PlayField::PlayField(QWidget* parent, QStatusBar* sbar)
 
     m_sea = new SeaView(this);
     layout->addWidget(m_sea, 1);
+    connect(this, SIGNAL(rotate()), m_sea, SLOT(rotate()));
 
     layout->setMargin(0);
 //     layout->setSpacing(0);

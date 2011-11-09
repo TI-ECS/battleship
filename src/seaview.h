@@ -77,6 +77,7 @@ protected:
 public slots:
     void buttonClicked(Button*);
     void update();
+    void rotate();
 };
 
 #endif // SEA_H

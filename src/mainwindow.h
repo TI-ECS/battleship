@@ -19,12 +19,14 @@ public:
 private:
     PlayField *m_main;
 
+signals:
+    void rotate();
+
 private slots:
     void startingGame();
     void newGame();
     void restartGame();
     void quit();
-    void rotate();
 };
 
 #endif /* _MAINWINDOW_H_ */

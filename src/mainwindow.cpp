@@ -10,6 +10,9 @@ MainWindow::MainWindow(QWidget *parent, Qt::WindowFlags flags)
 {
     setupUi(this);
 
+    m_main = new PlayField(this, statusBar());
+    setCentralWidget(m_main);
+
     QToolBar *toolbar = new QToolBar(this);
     toolbar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 
@@ -18,7 +21,7 @@ MainWindow::MainWindow(QWidget *parent, Qt::WindowFlags flags)
     toolbar->addAction(action);
 
     action = new QAction(QIcon(":/data/rotate.png"), "Rotate ship", this);
-    connect(action, SIGNAL(triggered()), SLOT(rotate()));
+    connect(action, SIGNAL(triggered()), m_main, SIGNAL(rotate()));
     toolbar->addAction(action);
 
     action = new QAction(QIcon(":/data/restart-game.png"), "Restart game", this);
@@ -30,9 +33,6 @@ MainWindow::MainWindow(QWidget *parent, Qt::WindowFlags flags)
     toolbar->addAction(action);
 
     addToolBar(toolbar);
-
-    m_main = new PlayField(this, statusBar());
-    setCentralWidget(m_main);
 
     connect(m_main, SIGNAL(startingGame()), SLOT(startingGame()));
     newGame();
@@ -55,11 +55,6 @@ void MainWindow::newGame()
 void MainWindow::restartGame()
 {
     //FIXME
-}
-
-void MainWindow::rotate()
-{
-    //TODO
 }
 
 void MainWindow::quit()

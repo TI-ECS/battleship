@@ -370,4 +370,11 @@ void SeaView::setNick(Sea::Player p, const QString& nick)
     m_labels[p]->setText(nick);
 }
 
+void SeaView::rotate()
+{
+    //FIXME might need to check if player is ever on field 1
+    if (m_delegate) {
+        m_delegate->changeDirection(Sea::Player(0));
+    }
+}
 
