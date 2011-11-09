@@ -10,7 +10,11 @@ int main(int argc, char *argv[])
     qRegisterMetaType<Coord>("Coord");
 
     MainWindow w;
+#ifndef DEBUG
+    w.showFullScreen();
+#else
     w.show();
+#endif
 
     return app.exec();
 }
