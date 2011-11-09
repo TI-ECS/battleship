@@ -10,7 +10,9 @@
 #include "simplemenu.h"
 
 #include <QTcpSocket>
+#include <QTcpServer>
 #include <QIcon>
+#include <QMessageBox>
 
 #include "button.h"
 #include "controller.h"
@@ -63,24 +65,27 @@ void SimpleMenu::createServer()
 {
     QWidget* parent_widget = qobject_cast<QWidget*>(parent());
     Q_ASSERT(parent_widget);
-    //TODO get server socket
-//    NetworkDialog dialog(false, parent_widget);
-//    if (dialog.exec()) {
-    QTcpSocket *s = new QTcpSocket(this);
-    finalize(DONE_SERVER, "Me", s);
-//    }
+
+    QTcpServer s(this);
+    QMessageBox dialog(parent_widget);
+    dialog.setText("Waiting for other player to connect...");
+    dialog.addButton(QMessageBox::Cancel);
+    connect(&s, SIGNAL(newConnection()), &dialog, SLOT(accept()));
+
+    s.listen(QHostAddress::Any, 1234);
+    if(dialog.exec() == QDialog::Accepted)
+        finalize(DONE_SERVER, tr("Me"), s.nextPendingConnection());
 }
 
 void SimpleMenu::createClient()
 {
     QWidget* parent_widget = qobject_cast<QWidget*>(parent());
     Q_ASSERT(parent_widget);
-    //TODO getclient socket
-//     NetworkDialog dialog(true, parent_widget,&url);
-//     if (dialog.exec() == QDialog::Accepted) {
+    //FIXME use avahi and don't block
     QTcpSocket *s = new QTcpSocket(this);
-    finalize(DONE_CLIENT, "Me", s);
-//     }
+    s->connectToHost(QHostAddress::LocalHost, 1234);
+    s->waitForConnected(-1);
+    finalize(DONE_CLIENT, tr("Me"), s);
 }
 
 void SimpleMenu::setupController(Controller* controller, Entity* old_opponent, SeaView* sea,
