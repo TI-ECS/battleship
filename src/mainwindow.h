@@ -18,6 +18,7 @@ public:
 
 private:
     PlayField *m_main;
+    bool m_started;
 
 signals:
     void rotate();

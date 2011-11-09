@@ -152,7 +152,7 @@ void PlayField::gameOver(Sea::Player winner)
 void PlayField::restartRequested()
 {
     int ans = QMessageBox::question(this, tr("Restart game"),
-                    tr("Your opponent has requested to restart the game. Do you accept?"));
+                    tr("Your opponent has requested to restart the game."));
     if (ans == QMessageBox::Ok) {
         restart(false);
     }

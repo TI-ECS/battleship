@@ -6,7 +6,7 @@
 #include "playfield.h"
 
 MainWindow::MainWindow(QWidget *parent, Qt::WindowFlags flags)
-    :QMainWindow(parent, flags)
+    :QMainWindow(parent, flags), m_started(false)
 {
     setupUi(this);
 
@@ -44,6 +44,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::startingGame()
 {
+    m_started = true;
     statusBar()->showMessage(tr("Place your ships"));
 }
 
@@ -54,7 +55,8 @@ void MainWindow::newGame()
 
 void MainWindow::restartGame()
 {
-    //FIXME
+    if(m_started)
+        m_main->restart();
 }
 
 void MainWindow::quit()
