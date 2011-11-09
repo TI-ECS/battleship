@@ -44,7 +44,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::startingGame()
 {
-    statusBar()->showMessage("Place your ships");
+    statusBar()->showMessage(tr("Place your ships"));
 }
 
 void MainWindow::newGame()
