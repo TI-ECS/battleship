@@ -21,8 +21,8 @@
 #include "seaview.h"
 #include "welcomescreen.h"
 
-const char* SimpleMenu::iconServer = "network-server";
-const char* SimpleMenu::iconClient = "network-connect";
+const char* SimpleMenu::iconServer = ":/data/network-server.png";
+const char* SimpleMenu::iconClient = ":/data/network-connect.png";
 
 SimpleMenu::SimpleMenu(QWidget* parent, WelcomeScreen* screen)
 : QObject(parent)
@@ -34,7 +34,7 @@ SimpleMenu::SimpleMenu(QWidget* parent, WelcomeScreen* screen)
 {
     if (m_screen) {
         // create buttons
-        m_server_btn = m_screen->addButton(0, 0, QIcon(QLatin1String( iconServer)), tr("Host Network Game"));
+        m_server_btn = m_screen->addButton(0, 0, QIcon(QLatin1String(iconServer)), tr("Host Network Game"));
         m_client_btn = m_screen->addButton(0, 1, QIcon(QLatin1String(iconClient)), tr("Connect to Network Game"));
 
         // create connections

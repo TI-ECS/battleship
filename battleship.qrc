@@ -1,5 +1,7 @@
-<!DOCTYPE RCC><RCC version="1.0">
-<qresource>
-    <file>data/default_theme.svgz</file>
-</qresource>
+<RCC>
+    <qresource prefix="/">
+        <file>data/default_theme.svgz</file>
+        <file>data/network-connect.png</file>
+        <file>data/network-server.png</file>
+    </qresource>
 </RCC>
