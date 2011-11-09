@@ -18,6 +18,9 @@ public:
 
 private:
     PlayField *m_main;
+
+private slots:
+    void startingGame();
 };
 
 #endif /* _MAINWINDOW_H_ */
