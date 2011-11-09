@@ -3,5 +3,9 @@
         <file>data/default_theme.svgz</file>
         <file>data/network-connect.png</file>
         <file>data/network-server.png</file>
+        <file>data/new-game.png</file>
+        <file>data/restart-game.png</file>
+        <file>data/rotate.png</file>
+        <file>data/application-exit.png</file>
     </qresource>
 </RCC>

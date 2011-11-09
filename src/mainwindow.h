@@ -21,6 +21,10 @@ private:
 
 private slots:
     void startingGame();
+    void newGame();
+    void restartGame();
+    void quit();
+    void rotate();
 };
 
 #endif /* _MAINWINDOW_H_ */
