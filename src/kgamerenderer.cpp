@@ -31,15 +31,6 @@
 //TODO: automatically schedule pre-rendering of animation frames
 //TODO: multithreaded SVG loading?
 
-static const QString cacheName(QString theme)
-{
-	const QString appName = QCoreApplication::instance()->applicationName();
-	//e.g. "themes/foobar.desktop" -> "themes/foobar"
-	if (theme.endsWith(QLatin1String(".desktop")))
-		theme.truncate(theme.length() - 8); //8 = strlen(".desktop")
-	return QString::fromLatin1("kgamerenderer-%1-%2").arg(appName).arg(theme);
-}
-
 KGameRendererPrivate::KGameRendererPrivate(const QString& defaultTheme, unsigned cacheSize, KGameRenderer* parent)
 	: m_parent(parent)
 	, m_defaultTheme(defaultTheme)
