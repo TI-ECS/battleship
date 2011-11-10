@@ -1,8 +1,12 @@
 TEMPLATE = app
 
-QT += gui svg xml network
-DEPENDPATH += . src
-INCLUDEPATH += . src
+QT += dbus gui svg xml network
+DEPENDPATH += . src src/dnssd
+INCLUDEPATH += . src src/dnssd
+
+CONFIG += link_pkgconfig
+PKGCONFIG += avahi-qt4
+PKGCONFIG += avahi-compat-libdns_sd
 
 RCC_DIR = tmp
 UI_DIR = tmp
@@ -73,7 +77,28 @@ HEADERS += src/animation.h \
            src/statswidget.h \
            src/uientity.h \
            src/welcomescreen.h \
-           src/clientnetworkdialog.h
+           src/clientnetworkdialog.h \
+           src/dnssd/avahi-domainbrowser_p.h \
+           src/dnssd/avahi_domainbrowser_interface.h \
+           src/dnssd/avahi-publicservice_p.h \
+           src/dnssd/avahi-remoteservice_p.h \
+           src/dnssd/avahi-servicebrowser_p.h \
+           src/dnssd/avahi-servicetypebrowser_p.h \
+           src/dnssd/avahi_entrygroup_interface.h \
+           src/dnssd/avahi_server_interface.h \
+           src/dnssd/avahi_serviceresolver_interface.h \
+           src/dnssd/avahi_servicebrowser_interface.h \
+           src/dnssd/avahi_servicetypebrowser_interface.h \
+           src/dnssd/domainbrowser.h \
+           src/dnssd/domainmodel.h \
+           src/dnssd/publicservice.h \
+           src/dnssd/remoteservice.h \
+           src/dnssd/servicebase.h \
+           src/dnssd/servicebase_p.h \
+           src/dnssd/servicebrowser.h \
+           src/dnssd/servicemodel.h \
+           src/dnssd/servicetypebrowser.h
+
 SOURCES += src/animation.cpp \
            src/animator.cpp \
            src/battlefield.cpp \
@@ -109,4 +134,18 @@ SOURCES += src/animation.cpp \
            src/statswidget.cpp \
            src/uientity.cpp \
            src/welcomescreen.cpp \
-           src/clientnetworkdialog.cpp
+           src/clientnetworkdialog.cpp \
+           src/dnssd/avahi-domainbrowser.cpp \
+           src/dnssd/avahi_domainbrowser_interface.cpp \
+           src/dnssd/avahi-publicservice.cpp \
+           src/dnssd/avahi-remoteservice.cpp \
+           src/dnssd/avahi_server_interface.cpp \
+           src/dnssd/avahi-servicebrowser.cpp \
+           src/dnssd/avahi_serviceresolver_interface.cpp \
+           src/dnssd/avahi-servicetypebrowser.cpp \
+           src/dnssd/avahi_servicebrowser_interface.cpp \
+           src/dnssd/avahi_servicetypebrowser_interface.cpp \
+           src/dnssd/domainmodel.cpp \
+           src/dnssd/servicebase.cpp \
+           src/dnssd/servicemodel.cpp \
+           src/dnssd/avahi_entrygroup_interface.cpp
