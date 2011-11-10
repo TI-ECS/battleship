@@ -151,12 +151,6 @@ void PlayerEntity::registerMiss(Sea::Player player, const Coord&)
     }
 }
 
-void PlayerEntity::notifyNick(Sea::Player, const QString& nickname)
-{
-    // TODO
-    // m_chat->display("Your opponent is now known as %1", nickname));
-}
-
 void PlayerEntity::notifyAbort()
 {
     // TODO

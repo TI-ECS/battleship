@@ -32,13 +32,11 @@ public:
     virtual void start(bool);
     virtual void hit(Shot* shot);
     virtual void notify(Sea::Player player, const Coord& c, const HitInfo& info);
-    virtual void notifyNick(Sea::Player player, const QString& text);
 
     // delegate interface
     virtual void action(Sea::Player player, const Coord& c);
     virtual void changeDirection(Sea::Player player);
     virtual Ship* canAddShip(Sea::Player player, const Coord& c);
-
     virtual void setNick(const QString& nick);
 protected:
     // parent interface
