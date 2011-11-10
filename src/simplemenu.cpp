@@ -16,7 +16,7 @@
 
 #include "button.h"
 #include "controller.h"
-//#include "networkdialog.h"
+#include "clientnetworkdialog.h"
 #include "playerentity.h"
 #include "protocol.h"
 #include "networkentity.h"
@@ -81,11 +81,14 @@ void SimpleMenu::createClient()
 {
     QWidget* parent_widget = qobject_cast<QWidget*>(parent());
     Q_ASSERT(parent_widget);
-    //FIXME use avahi and don't block
     QTcpSocket *s = new QTcpSocket(this);
-    s->connectToHost(QHostAddress::LocalHost, 1234);
-    s->waitForConnected(-1);
-    finalize(DONE_CLIENT, tr("Me"), s);
+    ClientNetworkDialog dialog;
+    if(dialog.exec())
+    {
+        s->connectToHost(dialog.getIp(), 1234);
+        if(s->waitForConnected(-1))
+            finalize(DONE_CLIENT, tr("Me"), s);
+    }
 }
 
 void SimpleMenu::setupController(Controller* controller, Entity* old_opponent, SeaView* sea,

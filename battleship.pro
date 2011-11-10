@@ -30,7 +30,8 @@ message ("The application will be installed in $$INSTALLDIR")
 target.path = $$INSTALLDIR/usr/bin
 INSTALLS += target
 
-FORMS += ui/mainwindow.ui
+FORMS += ui/mainwindow.ui \
+         ui/clientnetworkdialog.ui
 # Input
 HEADERS += src/animation.h \
            src/animator.h \
@@ -71,7 +72,8 @@ HEADERS += src/animation.h \
            src/stats.h \
            src/statswidget.h \
            src/uientity.h \
-           src/welcomescreen.h
+           src/welcomescreen.h \
+           src/clientnetworkdialog.h
 SOURCES += src/animation.cpp \
            src/animator.cpp \
            src/battlefield.cpp \
@@ -106,4 +108,5 @@ SOURCES += src/animation.cpp \
            src/stats.cpp \
            src/statswidget.cpp \
            src/uientity.cpp \
-           src/welcomescreen.cpp
+           src/welcomescreen.cpp \
+           src/clientnetworkdialog.cpp
