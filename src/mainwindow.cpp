@@ -1,9 +1,9 @@
 #include "mainwindow.h"
 
-#include <QVBoxLayout>
-#include <QToolBar>
-#include <QAction>
 #include "playfield.h"
+
+#include <QAction>
+#include <QToolBar>
 
 MainWindow::MainWindow(QWidget *parent, Qt::WindowFlags flags)
     :QMainWindow(parent, flags), m_started(false)
