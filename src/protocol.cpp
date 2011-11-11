@@ -11,9 +11,9 @@
 
 #include "protocol.h"
 
-#include <QStringList>
 #include <QDomElement>
 #include <QDomNode>
+#include <QStringList>
 
 #define ADD_FIELD(msg, field) addField(#field, msg.field())
 class MessageSender : public MessageVisitor

@@ -10,11 +10,12 @@
 #ifndef PLAYERENTITY_H
 #define PLAYERENTITY_H
 
-#include <QList>
 #include "sea.h"
 #include "uientity.h"
 #include "delegate.h"
 #include "stats.h"
+
+#include <QList>
 
 
 class PlayerEntity : public UIEntity, private Delegate

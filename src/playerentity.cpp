@@ -9,9 +9,10 @@
 
 #include "playerentity.h"
 
-#include <QMessageBox>
 #include "seaview.h"
 #include "shot.h"
+
+#include <QMessageBox>
 
 PlayerEntity::PlayerEntity(Sea::Player player, Sea* sea, SeaView* view)
 : UIEntity(player, sea, view)

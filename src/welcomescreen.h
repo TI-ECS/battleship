@@ -10,9 +10,10 @@
 #ifndef WELCOMESCREEN_H
 #define WELCOMESCREEN_H
 
-#include "kgamecanvas.h"
-#include <QHash>
 #include "grid.h"
+#include "kgamecanvas.h"
+
+#include <QHash>
 
 class Button;
 

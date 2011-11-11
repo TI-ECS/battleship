@@ -25,15 +25,15 @@
 #include "kshareddatacache_p.h" // Various auxiliary support code
 
 
-#include <QtCore/QDateTime>
-#include <QtCore/QSharedPointer>
-#include <QtCore/QByteArray>
-#include <QtCore/QFile>
+#include <QDir>
 #include <QtCore/QAtomicInt>
+#include <QtCore/QByteArray>
+#include <QtCore/QDateTime>
+#include <QtCore/QFile>
 #include <QtCore/QList>
 #include <QtCore/QMutex>
 #include <QtCore/QMutexLocker>
-#include <QDir>
+#include <QtCore/QSharedPointer>
 
 #include <sys/types.h>
 #include <sys/mman.h>

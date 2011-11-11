@@ -9,7 +9,7 @@
 
 #include "animation.h"
 
-#include <kgamecanvas.h>
+#include "kgamecanvas.h"
 
 Animation::~Animation()
 {

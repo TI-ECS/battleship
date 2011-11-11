@@ -8,8 +8,9 @@
 */
 
 #include "kbsrenderer.h"
-#include <QSvgRenderer>
+
 #include <QPainter>
+#include <QSvgRenderer>
 
 KBSRenderer::KBSRenderer(const QString& path)
 {

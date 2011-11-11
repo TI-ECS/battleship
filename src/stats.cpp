@@ -10,6 +10,7 @@
 */
 
 #include "stats.h"
+
 #include "hitinfo.h"
 
 Stats::Stats()

@@ -8,6 +8,7 @@
 */
 
 #include "element.h"
+
 #include "ship.h"
 
 Element::Element(Type type)

@@ -10,10 +10,11 @@
 #ifndef KBSRENDERER_H
 #define KBSRENDERER_H
 
-#include <QString>
-#include <QPixmap>
-#include <QHash>
 #include "ship.h"
+
+#include <QHash>
+#include <QPixmap>
+#include <QString>
 
 class QSvgRenderer;
 

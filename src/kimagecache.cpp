@@ -19,11 +19,11 @@
 
 #include "kimagecache.h"
 
-#include <QtGui/QPixmap>
-#include <QtGui/QImage>
 #include <QtCore/QBuffer>
 #include <QtCore/QCache>
 #include <QtCore/QCoreApplication>
+#include <QtGui/QImage>
+#include <QtGui/QPixmap>
 
 #include <time.h>
 

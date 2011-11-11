@@ -10,9 +10,10 @@
 #ifndef Sea_H
 #define Sea_H
 
-#include <QObject>
-#include "ship.h"
 #include "hitinfo.h"
+#include "ship.h"
+
+#include <QObject>
 
 class BattleField;
 

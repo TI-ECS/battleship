@@ -8,7 +8,8 @@
 */
 
 #include "ship.h"
-#include <qdebug.h>
+
+#include <QDebug>
 
 Ship::Ship(unsigned int size, Direction direction)
 : m_size(size)

@@ -17,9 +17,10 @@
  ***************************************************************************/
 
 #include "kgamerenderer.h"
+
+#include "colorproxy_p.h"
 #include "kgamerenderer_p.h"
 #include "kgamerendererclient.h"
-#include "colorproxy_p.h"
 
 #include <QtCore/QCoreApplication>
 #include <QtCore/QDateTime>

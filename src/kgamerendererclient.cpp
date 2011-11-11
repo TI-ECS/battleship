@@ -17,6 +17,7 @@
  ***************************************************************************/
 
 #include "kgamerendererclient.h"
+
 #include "kgamerenderer.h"
 #include "kgamerenderer_p.h"
 

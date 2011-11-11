@@ -10,10 +10,11 @@
 #ifndef KBATTLESHIP_PROTOCOL_H
 #define KBATTLESHIP_PROTOCOL_H
 
+#include "message.h"
+
+#include <QQueue>
 #include <QString>
 #include <QTimer>
-#include <QQueue>
-#include "message.h"
 
 class QIODevice;
 

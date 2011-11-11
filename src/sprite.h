@@ -10,8 +10,8 @@
 #ifndef SPRITE_H
 #define SPRITE_H
 
-#include "kgamecanvas.h"
 #include "coord.h"
+#include "kgamecanvas.h"
 
 class KBSRenderer;
 

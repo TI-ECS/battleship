@@ -10,8 +10,7 @@
 #ifndef MESSAGE_H
 #define MESSAGE_H
 
-#include <ksharedptr.h>
-
+#include "ksharedptr.h"
 #include "ship.h"
 
 class MessageVisitor;

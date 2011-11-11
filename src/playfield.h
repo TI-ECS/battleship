@@ -10,8 +10,9 @@
 #ifndef PLAYFIELD_H
 #define PLAYFIELD_H
 
-#include <QWidget>
 #include "sea.h"
+
+#include <QWidget>
 
 class SeaView;
 class Controller;

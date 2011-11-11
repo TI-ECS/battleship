@@ -10,9 +10,10 @@
 #ifndef STATSWIDGET_H
 #define STATSWIDGET_H
 
+#include "kgamecanvas.h"
+
 #include <QFontMetrics>
 #include <QPointer>
-#include "kgamecanvas.h"
 
 class KBSRenderer;
 class Stats;

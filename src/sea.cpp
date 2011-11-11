@@ -8,6 +8,7 @@
 */
 
 #include "sea.h"
+
 #include "battlefield.h"
 
 Sea::Sea(QObject* parent, const Coord& size)

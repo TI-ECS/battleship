@@ -10,9 +10,10 @@
 #ifndef ENTITY_H
 #define ENTITY_H
 
-#include <QObject>
 #include "sea.h"
 #include "stats.h"
+
+#include <QObject>
 
 class Shot;
 class QIcon;

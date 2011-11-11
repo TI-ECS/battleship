@@ -8,6 +8,7 @@
 */
 
 #include "shot.h"
+
 #include "controller.h"
 
 Shot::Shot(Controller* parent, Sea::Player player, const Coord& pos)

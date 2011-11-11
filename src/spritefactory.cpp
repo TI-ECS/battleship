@@ -9,10 +9,10 @@
 
 #include "spritefactory.h"
 
-#include <sstream>
-
 #include "ship.h"
 #include "sprite.h"
+
+#include <sstream>
 
 SpriteFactory::SpriteFactory(KGameCanvasAbstract* canvas, KBSRenderer* renderer)
 : m_canvas(canvas)

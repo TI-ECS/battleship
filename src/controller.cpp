@@ -9,8 +9,8 @@
 
 #include "controller.h"
 
-#include "playerentity.h"
 #include "networkentity.h"
+#include "playerentity.h"
 #include "seaview.h"
 #include "shot.h"
 

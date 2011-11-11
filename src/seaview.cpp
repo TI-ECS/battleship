@@ -9,9 +9,6 @@
 
 #include "seaview.h"
 
-#include <QMouseEvent>
-#include <QIcon>
-
 #include "battlefieldview.h"
 #include "button.h"
 #include "delegate.h"
@@ -20,6 +17,9 @@
 #include "playerlabel.h"
 #include "statswidget.h"
 #include "welcomescreen.h"
+
+#include <QMouseEvent>
+#include <QIcon>
 
 
 SeaView::SeaView(QWidget* parent)

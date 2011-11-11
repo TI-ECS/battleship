@@ -8,8 +8,9 @@
 */
 
 #include "welcomescreen.h"
-#include "button.h"
+
 #include "animator.h"
+#include "button.h"
 
 WelcomeScreen::WelcomeScreen(KGameCanvasAbstract* parent, const QFont& font)
 : KGameCanvasGroup(parent)

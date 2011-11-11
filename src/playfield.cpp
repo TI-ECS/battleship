@@ -11,16 +11,16 @@
 
 #include "playfield.h"
 
-#include <QMessageBox>
-#include <QStatusBar>
-#include <QVBoxLayout>
-
 #include "controller.h"
 #include "playerentity.h"
 #include "seaview.h"
 #include "simplemenu.h"
 #include "stats.h"
 #include "welcomescreen.h"
+
+#include <QMessageBox>
+#include <QStatusBar>
+#include <QVBoxLayout>
 
 static const int MINIMUM_HEIGHT = 400;
 

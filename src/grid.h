@@ -10,8 +10,9 @@
 #ifndef GRID_H
 #define GRID_H
 
-#include <qdebug.h>
 #include "coord.h"
+
+#include <QDebug>
 
 #define FOREACH_SQUARE(p, grid) \
     for (Coord p(0,0); p.x < grid.width(); p.x++) \

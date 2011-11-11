@@ -10,11 +10,12 @@
 
 #include "button.h"
 
+#include "animator.h"
+
+#include <math.h> // fabs
 #include <QImage>
 #include <QDebug>
-#include <math.h> // fabs
 
-#include "animator.h"
 
 Button::Button(WelcomeScreen* parent, const QIcon& icon,
                const QFont& font, const QString& text)

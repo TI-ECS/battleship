@@ -9,7 +9,6 @@
 
 #include "sprite.h"
 
-
 #include "kbsrenderer.h"
 
 Sprite::Sprite(KGameCanvasAbstract* parent, KBSRenderer* renderer, 

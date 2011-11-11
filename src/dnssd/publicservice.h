@@ -21,8 +21,9 @@
 #ifndef DNSSDPUBLICSERVICE_H
 #define DNSSDPUBLICSERVICE_H
 
+#include "dnssd/servicebase.h"
+
 #include <QtCore/QObject>
-#include <dnssd/servicebase.h>
 #include <QtCore/QStringList>
 
 namespace DNSSD

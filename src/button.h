@@ -10,13 +10,13 @@
 #ifndef BUTTON_H
 #define BUTTON_H
 
-#include <QIcon>
-#include <QFont>
-#include <QSize>
-#include <QPointer>
-
-#include "welcomescreen.h"
 #include "animation.h"
+#include "welcomescreen.h"
+
+#include <QFont>
+#include <QIcon>
+#include <QPointer>
+#include <QSize>
 
 class ButtonAnimation;
 class QWidget;

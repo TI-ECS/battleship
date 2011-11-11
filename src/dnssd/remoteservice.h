@@ -21,9 +21,10 @@
 #ifndef DNSSDREMOTESERVICE_H
 #define DNSSDREMOTESERVICE_H
 
+#include "dnssd/servicebase.h"
+
 #include <QtCore/QObject>
 #include <QtCore/QMetaType>
-#include <dnssd/servicebase.h>
 
 namespace DNSSD
 {

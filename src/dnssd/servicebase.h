@@ -21,10 +21,11 @@
 #ifndef DNSSDSERVICEBASE_H
 #define DNSSDSERVICEBASE_H
 
+#include "ksharedptr.h"
+#include "dnssd/dnssd_export.h"
+
 #include <QtCore/QMap>
 #include <QtCore/QString>
-#include <ksharedptr.h>
-#include <dnssd/dnssd_export.h>
 
 namespace DNSSD
 {

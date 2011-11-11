@@ -13,6 +13,7 @@
 #include "ship.h"
 #include "hitinfo.h"
 #include "grid.h"
+
 #include <QObject>
 
 class Sea;

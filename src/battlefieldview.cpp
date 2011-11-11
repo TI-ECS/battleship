@@ -9,7 +9,6 @@
 
 #include "battlefieldview.h"
 
-
 #include "kbsrenderer.h"
 #include "sprite.h"
 #include "animator.h"

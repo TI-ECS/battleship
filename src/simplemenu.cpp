@@ -100,7 +100,6 @@ void SimpleMenu::createClient()
         s->connectToHost(dialog.getHostName(), dialog.getPort());
         if(s->waitForConnected(-1))
             finalize(DONE_CLIENT, tr("Me"), s);
-        qDebug() << "state: " << s->state();
     }
 }
 

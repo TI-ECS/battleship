@@ -19,11 +19,11 @@
 #ifndef KGAMERENDERER_H
 #define KGAMERENDERER_H
 
-class QGraphicsView;
 #include <QtCore/QHash>
 #include <QtCore/QObject>
 #include <QtGui/QPixmap>
 
+class QGraphicsView;
 class KGameRendererPrivate;
 class KGameRendererClient;
 class KGameRendererClientPrivate;

@@ -10,9 +10,9 @@
 #ifndef SEA_H
 #define SEA_H
 
+#include "animator.h"
 #include "kgamecanvas.h"
 #include "sea.h"
-#include "animator.h"
 
 class BattleFieldView;
 class KBSRenderer;
