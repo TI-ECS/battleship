@@ -1,8 +1,15 @@
 #ifndef CLIENTNETWORKDIALOG_H
 #define CLIENTNETWORKDIALOG_H
 
-#include <QDialog>
 #include "ui_clientnetworkdialog.h"
+
+#include "remoteservice.h"
+
+#include <QDialog>
+
+namespace DNSSD {
+    class ServiceBrowser;
+}
 
 class ClientNetworkDialog : public QDialog, public Ui::ClientNetworkDialog
 {
@@ -10,14 +17,18 @@ class ClientNetworkDialog : public QDialog, public Ui::ClientNetworkDialog
         QString name;
         QString ip;
     };
+    DNSSD::RemoteService::Ptr service;
+    DNSSD::ServiceBrowser* browser;
     QList<Server> servers;
-    QString ip;
+    QString hostname;
+    int port;
     Q_OBJECT
 
 public:
     explicit ClientNetworkDialog(QWidget *parent = 0);
     ~ClientNetworkDialog();
-    QString getIp() const;
+    QString getHostName() const;
+    int getPort();
 
 public slots:
     virtual void accept();

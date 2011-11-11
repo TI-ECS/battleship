@@ -1,43 +1,49 @@
 #include "clientnetworkdialog.h"
+
+#include "remoteservice.h"
+#include "servicebrowser.h"
+#include "servicemodel.h"
 #include "ui_clientnetworkdialog.h"
 
 ClientNetworkDialog::ClientNetworkDialog(QWidget *parent) :
-    QDialog(parent)
+    QDialog(parent, Qt::Dialog)
 {
     setupUi(this);
 
-    //FIXME Fetch list of server from avahi
-    servers.append(Server{"Server 0", "127.0.0.1"});
-    servers.append(Server{"Server 1", "127.0.0.1"});
-    servers.append(Server{"Server 2", "127.0.0.1"});
-    servers.append(Server{"Server 3", "127.0.0.1"});
-    servers.append(Server{"Server 4", "127.0.0.1"});
-    servers.append(Server{"Server 5", "127.0.0.1"});
+    browser = new DNSSD::ServiceBrowser("_battleship._tcp", true);
+    comboBox->setModel(new DNSSD::ServiceModel(browser, this));
 
-    for(int i = 0; i < servers.size(); i++)
-        listWidget->addItem(servers.at(i).name);
-
-    listWidget->setSelectionMode(QAbstractItemView::SingleSelection);
-    listWidget->setCurrentRow(0);
-
-    connect(listWidget, SIGNAL(itemActivated(QListWidgetItem*)), SLOT(accept()));
     connect(buttonBox, SIGNAL(accepted()), SLOT(accept()));
     connect(buttonBox, SIGNAL(rejected()), SLOT(reject()));
 }
 
 ClientNetworkDialog::~ClientNetworkDialog()
 {
+    delete browser;
 }
 
 void ClientNetworkDialog::accept()
 {
-    ip = servers.at(listWidget->currentRow()).ip;
+    service = comboBox->itemData(comboBox->currentIndex(),
+                                 DNSSD::ServiceModel::ServicePtrRole).
+        value<DNSSD::RemoteService::Ptr>();
+    service.data()->resolve();
+    hostname = service.data()->hostName().remove(".local");
+    port = service.data()->port();
+
     QDialog::accept();
 }
 
-QString ClientNetworkDialog::getIp() const
+QString ClientNetworkDialog::getHostName() const
 {
     if(result() == QDialog::Accepted)
-        return ip;
+        return hostname;
     return "";
+}
+
+int ClientNetworkDialog::getPort()
+{
+    if(result() == QDialog::Accepted)
+        return port;
+    return -1;
 }

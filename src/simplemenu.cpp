@@ -92,9 +92,10 @@ void SimpleMenu::createClient()
     ClientNetworkDialog dialog;
     if(dialog.exec())
     {
-        s->connectToHost(dialog.getIp(), 1234);
+        s->connectToHost(dialog.getHostName(), dialog.getPort());
         if(s->waitForConnected(-1))
             finalize(DONE_CLIENT, tr("Me"), s);
+        qDebug() << "state: " << s->state();
     }
 }
 
