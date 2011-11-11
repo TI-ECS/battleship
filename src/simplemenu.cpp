@@ -22,6 +22,7 @@
 #include "servicemodel.h"
 #include "welcomescreen.h"
 
+#include <QHostInfo>
 #include <QIcon>
 #include <QMessageBox>
 #include <QTcpServer>
@@ -38,6 +39,7 @@ SimpleMenu::SimpleMenu(QWidget* parent, WelcomeScreen* screen)
 , m_player1(0)
 , m_player2(0)
 {
+    m_publisher = NULL;
     if (m_screen) {
         // create buttons
         m_server_btn = m_screen->addButton(0, 0, QIcon(QLatin1String(iconServer)), tr("Host Network Game"));
@@ -71,7 +73,8 @@ void SimpleMenu::createServer()
     Q_ASSERT(parent_widget);
 
     QTcpServer s(this);
-    m_publisher=new DNSSD::PublicService("battleship", "_battleship._tcp", 1234);
+    if (!m_publisher)
+        m_publisher = new DNSSD::PublicService(QHostInfo::localHostName(), "_battleship._tcp", 1234);
     m_publisher->publishAsync();
     QMessageBox dialog(parent_widget);
     dialog.setText("Waiting for other player to connect...");
@@ -81,6 +84,8 @@ void SimpleMenu::createServer()
     s.listen(QHostAddress::Any, 1234);
     if(dialog.exec() == QDialog::Accepted)
         finalize(DONE_SERVER, tr("Me"), s.nextPendingConnection());
+    else
+        m_publisher->stop();
 }
 
 void SimpleMenu::createClient()
