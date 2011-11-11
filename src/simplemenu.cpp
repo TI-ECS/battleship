@@ -9,19 +9,23 @@
 
 #include "simplemenu.h"
 
-#include <QTcpSocket>
-#include <QTcpServer>
-#include <QIcon>
-#include <QMessageBox>
-
 #include "button.h"
-#include "controller.h"
 #include "clientnetworkdialog.h"
+#include "controller.h"
+#include "networkentity.h"
 #include "playerentity.h"
 #include "protocol.h"
-#include "networkentity.h"
+#include "publicservice.h"
+#include "remoteservice.h"
 #include "seaview.h"
+#include "servicebrowser.h"
+#include "servicemodel.h"
 #include "welcomescreen.h"
+
+#include <QIcon>
+#include <QMessageBox>
+#include <QTcpServer>
+#include <QTcpSocket>
 
 const char* SimpleMenu::iconServer = ":/data/network-server.png";
 const char* SimpleMenu::iconClient = ":/data/network-connect.png";
@@ -67,6 +71,8 @@ void SimpleMenu::createServer()
     Q_ASSERT(parent_widget);
 
     QTcpServer s(this);
+    m_publisher=new DNSSD::PublicService("battleship", "_battleship._tcp", 1234);
+    m_publisher->publishAsync();
     QMessageBox dialog(parent_widget);
     dialog.setText("Waiting for other player to connect...");
     dialog.addButton(QMessageBox::Cancel);
@@ -82,6 +88,7 @@ void SimpleMenu::createClient()
     QWidget* parent_widget = qobject_cast<QWidget*>(parent());
     Q_ASSERT(parent_widget);
     QTcpSocket *s = new QTcpSocket(this);
+
     ClientNetworkDialog dialog;
     if(dialog.exec())
     {
