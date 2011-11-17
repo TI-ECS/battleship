@@ -17,7 +17,6 @@ class ClientNetworkDialog : public QDialog, public Ui::ClientNetworkDialog
         QString name;
         QString ip;
     };
-    DNSSD::RemoteService::Ptr service;
     DNSSD::ServiceBrowser* browser;
     QList<Server> servers;
     QString hostname;

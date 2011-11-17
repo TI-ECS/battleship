@@ -24,6 +24,7 @@ ClientNetworkDialog::~ClientNetworkDialog()
 
 void ClientNetworkDialog::accept()
 {
+    DNSSD::RemoteService::Ptr service;
     service = comboBox->itemData(comboBox->currentIndex(),
                                  DNSSD::ServiceModel::ServicePtrRole).
         value<DNSSD::RemoteService::Ptr>();
