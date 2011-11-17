@@ -32,7 +32,7 @@ public:
 class StatsWidgetElement : public KGameCanvasGroup
 {
 public:
-    static const int HEIGHT = 40;
+    static const int HEIGHT = 35;
     static const int MARGIN = 8;
 private:
     int m_width; // requested width

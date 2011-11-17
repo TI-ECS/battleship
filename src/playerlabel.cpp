@@ -16,19 +16,21 @@ PlayerLabel::PlayerLabel(const QPixmap& icon, const QString& text,
     KGameCanvasAbstract* parent)
 : KGameCanvasGroup(parent)
 {
-    m_icon = new KGameCanvasPixmap(icon, this);
+    m_icon = new KGameCanvasPixmap(icon.scaledToHeight(15, Qt::FastTransformation),
+                                   this);
     m_icon->show();
 
     QFont font;
-    font.setPixelSize(20);
+    font.setPixelSize(15);
     m_name = new KGameCanvasText(text, Qt::black, font,
-        KGameCanvasText::HLeft, KGameCanvasText::VTop, this);
+                                 KGameCanvasText::HLeft,
+                                 KGameCanvasText::VTop, this);
     m_name->show();
 }
 
 void PlayerLabel::setData(const QPixmap& icon, const QString& text)
 {
-    m_icon->setPixmap(icon);
+    m_icon->setPixmap(icon.scaledToHeight(15, Qt::FastTransformation));
     m_name->setText(text);
 
     update();

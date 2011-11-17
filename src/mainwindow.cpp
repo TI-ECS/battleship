@@ -24,7 +24,7 @@ MainWindow::MainWindow(QWidget *parent, Qt::WindowFlags flags)
     connect(action, SIGNAL(triggered()), m_main, SIGNAL(rotate()));
     toolbar->addAction(action);
 
-    action = new QAction(QIcon(":/data/restart-game.png"), "Restart game", this);
+    action = new QAction(QIcon(":/data/restart-game.png"), "Restart", this);
     connect(action, SIGNAL(triggered()), SLOT(restartGame()));
     toolbar->addAction(action);
 
@@ -32,7 +32,7 @@ MainWindow::MainWindow(QWidget *parent, Qt::WindowFlags flags)
     connect(action, SIGNAL(triggered()), SLOT(quit()));
     toolbar->addAction(action);
 
-    addToolBar(toolbar);
+    addToolBar(Qt::LeftToolBarArea, toolbar);
 
     connect(m_main, SIGNAL(startingGame()), SLOT(startingGame()));
     newGame();

@@ -29,7 +29,7 @@ PlayField::PlayField(QWidget* parent, QStatusBar* sbar)
 , m_status_bar(sbar)
 , m_show_endofgame_message(true)
 {
-    setMinimumSize(static_cast<int>(MINIMUM_HEIGHT * 1.6), MINIMUM_HEIGHT);
+    // setMinimumSize(static_cast<int>(MINIMUM_HEIGHT * 1.6), MINIMUM_HEIGHT);
     QVBoxLayout* layout = new QVBoxLayout;
 
     m_sea = new SeaView(this);

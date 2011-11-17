@@ -42,8 +42,10 @@ SimpleMenu::SimpleMenu(QWidget* parent, WelcomeScreen* screen)
     m_publisher = NULL;
     if (m_screen) {
         // create buttons
-        m_server_btn = m_screen->addButton(0, 0, QIcon(QLatin1String(iconServer)), tr("Host Network Game"));
-        m_client_btn = m_screen->addButton(0, 1, QIcon(QLatin1String(iconClient)), tr("Connect to Network Game"));
+        m_server_btn = m_screen->addButton(0, 0, QIcon(QLatin1String(iconServer)),
+                                           tr("Host Game"));
+        m_client_btn = m_screen->addButton(0, 1, QIcon(QLatin1String(iconClient)),
+                                           tr("Connect to Game"));
 
         // create connections
         connect(m_server_btn, SIGNAL(clicked()),
@@ -117,7 +119,7 @@ void SimpleMenu::setupController(Controller* controller, Entity* old_opponent, S
             m_player2->setNick(old_opponent->nick());
         }
         sea->setStats(Sea::Player(1), "score_network",
-                      m_player2->nick().isEmpty() ? tr("Remote player") : m_player2->nick(),
+                      m_player2->nick().isEmpty() ? tr("Opponent") : m_player2->nick(),
                       m_player2->stats());
         break;
     }
@@ -131,7 +133,7 @@ void SimpleMenu::setupController(Controller* controller, Entity* old_opponent, S
             m_player2->setNick(old_opponent->nick());
         }
         sea->setStats(Sea::Player(1), "score_network",
-                      m_player2->nick().isEmpty() ? tr("Remote player") : m_player2->nick(),
+                      m_player2->nick().isEmpty() ? tr("Opponent") : m_player2->nick(),
                       m_player2->stats());
         break;
     }

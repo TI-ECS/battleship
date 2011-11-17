@@ -15,8 +15,8 @@
 class PlayerLabel : public KGameCanvasGroup
 {
 public:
-    static const int HEIGHT = 32;
-    static const int MARGIN = 10;
+    static const int HEIGHT = 18;
+    static const int MARGIN = 3;
 
 private:
     KGameCanvasPixmap* m_icon;
