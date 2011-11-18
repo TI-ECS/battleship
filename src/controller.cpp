@@ -27,12 +27,13 @@ Controller::Controller(QObject* parent)
 PlayerEntity* Controller::createPlayer(Sea::Player player, SeaView* view,
                                        const QString& nick)
 {
+    Q_UNUSED(nick);
+
     if (m_ui) {
         qDebug() << "Cannot create more than one human player";
         return 0;
     }
     PlayerEntity* entity = new PlayerEntity(player, m_sea, view);
-    entity->setNick(nick);
     m_ui = entity;
     setupEntity(m_ui);
     return entity;
@@ -58,19 +59,8 @@ void Controller::setupEntity(Entity* entity)
             this, SLOT(shoot(int,Coord)), Qt::QueuedConnection);
     connect(entity, SIGNAL(ready(int)),
             this, SLOT(ready(int)), Qt::QueuedConnection);
-    connect(entity, SIGNAL(nick(int,QString)),
-            this, SLOT(nick(int,QString)));
-    connect(entity, SIGNAL(compatibility(int)),
-            this, SIGNAL(compatibility(int)));
     connect(entity, SIGNAL(abortGame()),
             this, SIGNAL(gameAbort()));
-
-    foreach (Entity* e, m_entities) {
-        connect(e, SIGNAL(compatibility(int)),
-                entity, SLOT(setCompatibilityLevel(int)));
-        connect(entity, SIGNAL(compatibility(int)),
-                e, SLOT(setCompatibilityLevel(int)));
-    }
 
     m_entities.append(entity);
 }
@@ -103,14 +93,6 @@ bool Controller::start(SeaView* view, bool ask)
         entity->start(ask);
     }
 
-    foreach (Entity* source, m_entities) {
-        foreach (Entity* target, m_entities) {
-            if (source->player() != target->player() &&
-                !source->nick().isEmpty()) {
-                target->notifyNick(source->player(), source->nick());
-            }
-        }
-    }
     return true;
 }
 
@@ -205,17 +187,6 @@ Entity* Controller::findEntity(Sea::Player player) const
     }
 
     return 0;
-}
-
-void Controller::nick(int player, const QString& nick)
-{
-    qDebug() << "controller: nick";
-    foreach (Entity* entity, m_entities) {
-        if (entity->player() != Sea::Player(player)) {
-            entity->notifyNick(Sea::Player(player), nick);
-        }
-    }
-    emit nickChanged(player, nick);
 }
 
 Sea::Player Controller::turn() const

@@ -80,20 +80,6 @@ void NetworkEntity::notify(Sea::Player player, const Coord& c, const HitInfo& in
     }
 }
 
-void NetworkEntity::notifyNick(Sea::Player player, const QString& nick)
-{
-    if (player != m_player) {
-        m_protocol->send(MessagePtr(new NickMessage(nick)));
-    }
-}
-
-void NetworkEntity::notifyChat(const Entity* entity, const QString& text)
-{
-    if (entity != this) {
-        m_protocol->send(MessagePtr(new ChatMessage(entity->nick(), text)));
-    }
-}
-
 void NetworkEntity::hit(Shot* shot)
 {
     if (shot->player() != m_player
@@ -117,23 +103,11 @@ void NetworkEntity::visit(const HeaderMessage& msg)
     if (msg.clientName() == "KBattleship" && msg.clientVersion().toFloat() >= 4.0) {
         // m_level = COMPAT_KBS4;
     }
-    else {
-        if (m_level != COMPAT_KBS3) {
-            m_level = COMPAT_KBS3;
-            emit compatibility(m_level);
-        }
-    }
 }
 
 void NetworkEntity::visit(const RejectMessage&)
 {
 
-}
-
-void NetworkEntity::visit(const NickMessage& msg)
-{
-    setNick(msg.nickname());
-    emit nick(m_player, m_nick);
 }
 
 void NetworkEntity::visit(const BeginMessage&)
@@ -168,9 +142,6 @@ void NetworkEntity::visit(const NotificationMessage& msg)
             }
 
             m_sea->forceHit(msg.move(), info);
-            if (m_level == COMPAT_KBS3 && info.shipDestroyed) {
-                m_sea->addBorder(m_player, info.shipPos);
-            }
             m_pending_shot->execute(info);
         }
 
@@ -186,11 +157,6 @@ void NetworkEntity::visit(const GameOverMessage&)
 void NetworkEntity::visit(const RestartMessage&)
 {
     emit restartRequested();
-}
-
-void NetworkEntity::visit(const ChatMessage& msg)
-{
-    emit chat(msg.chat());
 }
 
 QIcon NetworkEntity::icon() const

@@ -36,7 +36,6 @@ Q_OBJECT
 public:
     PlayField(QWidget* parent, QStatusBar*);
     ~PlayField();
-    /* void createClient(const KUrl& url); */
 public slots:
     void gameAbort();
     void gameOver(Sea::Player winner);

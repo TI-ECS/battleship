@@ -44,17 +44,6 @@ void RejectMessage::accept(MessageVisitor& visitor) const
     visitor.visit(*this);
 }
 
-NickMessage::NickMessage(const QString& nickname)
-: m_nickname(nickname)
-{
-}
-
-void NickMessage::accept(MessageVisitor& visitor) const
-{
-    visitor.visit(*this);
-}
-
-
 void BeginMessage::accept(MessageVisitor& visitor) const
 {
     visitor.visit(*this);
@@ -85,18 +74,6 @@ void NotificationMessage::accept(MessageVisitor& visitor) const
 {
     visitor.visit(*this);
 }
-
-ChatMessage::ChatMessage(const QString& nickname, const QString& chat)
-: m_nickname(nickname)
-, m_chat(chat)
-{
-}
-
-void ChatMessage::accept(MessageVisitor& visitor) const
-{
-    visitor.visit(*this);
-}
-
 
 void RestartMessage::accept(MessageVisitor& visitor) const
 {

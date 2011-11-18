@@ -38,7 +38,6 @@ public:
     virtual void action(Sea::Player player, const Coord& c);
     virtual void changeDirection(Sea::Player player);
     virtual Ship* canAddShip(Sea::Player player, const Coord& c);
-    virtual void setNick(const QString& nick);
 protected:
     // parent interface
     virtual void registerHit(Sea::Player player, const Coord& c);

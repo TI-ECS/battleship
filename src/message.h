@@ -55,17 +55,6 @@ public:
     virtual void accept(MessageVisitor& visitor) const;
 };
 
-class NickMessage : public Message
-{
-    QString m_nickname;
-public:
-    static const int MSGTYPE = 2;
-    NickMessage(const QString& nickname);
-    virtual void accept(MessageVisitor& visitor) const;
-    
-    const QString& nickname() const { return m_nickname; }
-};
-
 class BeginMessage : public Message
 {
 public:
@@ -102,19 +91,6 @@ public:
     bool death() const { return m_death; }
     const Coord& start() const { return m_start; }
     const Coord& stop() const { return m_stop; }
-};
-
-class ChatMessage : public Message
-{
-    QString m_nickname;
-    QString m_chat;
-public:
-    static const int MSGTYPE = 8;
-    explicit ChatMessage(const QString& nick, const QString& chat);
-    virtual void accept(MessageVisitor& visitor) const;
-    
-    const QString& chat() const { return m_chat; }
-    const QString& nickname() const { return m_nickname; }
 };
 
 class RestartMessage : public Message
@@ -159,13 +135,11 @@ public:
     virtual ~MessageVisitor() { }
     virtual void visit(const HeaderMessage& msg) = 0;
     virtual void visit(const RejectMessage& msg) = 0;
-    virtual void visit(const NickMessage& msg) = 0;
     virtual void visit(const BeginMessage& msg) = 0;
     virtual void visit(const MoveMessage& msg) = 0;
     virtual void visit(const NotificationMessage& msg) = 0;
     virtual void visit(const GameOverMessage& msg) = 0;
     virtual void visit(const RestartMessage& msg) = 0;
-    virtual void visit(const ChatMessage& msg) = 0;
 };
 
 #endif // MESSAGE_H

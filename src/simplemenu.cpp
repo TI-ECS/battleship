@@ -108,6 +108,7 @@ void SimpleMenu::createClient()
 void SimpleMenu::setupController(Controller* controller, Entity* old_opponent, SeaView* sea,
                                  bool ask)
 {
+    Q_UNUSED(old_opponent);
     switch (m_state) {
     case DONE_SERVER: {
         Q_ASSERT(m_protocol);
@@ -115,11 +116,7 @@ void SimpleMenu::setupController(Controller* controller, Entity* old_opponent, S
         sea->setStats(Sea::Player(0), "score_mouse",
                       m_nickname, m_player1->stats());
         m_player2 = controller->createRemotePlayer(Sea::Player(1), m_protocol, false);
-        if (old_opponent) {
-            m_player2->setNick(old_opponent->nick());
-        }
-        sea->setStats(Sea::Player(1), "score_network",
-                      m_player2->nick().isEmpty() ? tr("Opponent") : m_player2->nick(),
+        sea->setStats(Sea::Player(1), "score_network", tr("Opponent"),
                       m_player2->stats());
         break;
     }
@@ -129,11 +126,7 @@ void SimpleMenu::setupController(Controller* controller, Entity* old_opponent, S
         sea->setStats(Sea::Player(0), "score_mouse",
                       m_nickname, m_player1->stats());
         m_player2 = controller->createRemotePlayer(Sea::Player(1), m_protocol, true);
-        if (old_opponent) {
-            m_player2->setNick(old_opponent->nick());
-        }
-        sea->setStats(Sea::Player(1), "score_network",
-                      m_player2->nick().isEmpty() ? tr("Opponent") : m_player2->nick(),
+        sea->setStats(Sea::Player(1), "score_network", tr("Opponent"),
                       m_player2->stats());
         break;
     }

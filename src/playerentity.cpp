@@ -34,19 +34,8 @@ Ship* PlayerEntity::canAddShip(const Coord& c)
     Ship* ship = nextShip();
     Q_ASSERT(ship);
 
-    if (m_sea->canAddShip(m_player, c, ship->size(), ship->direction())) {
-        // check if it is near any other ship
-        // in KBS3 mode
-        if (m_level == COMPAT_KBS3) {
-            for (unsigned int i = 0; i < ship->size(); i++) {
-                if (m_sea->isNearShip(m_player, c + ship->increment() * i)) {
-                    return 0;
-                }
-            }
-        }
-
+    if (m_sea->canAddShip(m_player, c, ship->size(), ship->direction()))
         return ship;
-    }
 
     return 0;
 }
@@ -104,13 +93,6 @@ void PlayerEntity::hit(Shot* shot)
 void PlayerEntity::notify(Sea::Player player, const Coord& c, const HitInfo& info)
 {
     UIEntity::notify(player, c, info);
-
-    // add a border around sunk ship in KBS3 mode
-    if (m_level == COMPAT_KBS3 &&
-        player == m_player &&
-        info.shipDestroyed) {
-        m_sea->addBorder(player, info.shipPos);
-    }
 }
 
 void PlayerEntity::changeDirection(Sea::Player player)
@@ -150,10 +132,4 @@ void PlayerEntity::registerMiss(Sea::Player player, const Coord&)
     if (player == m_player) {
         m_stats.addMiss();
     }
-}
-
-void PlayerEntity::setNick(const QString& nick)
-{
-    UIEntity::setNick(nick);
-    // m_chat->setNick(nick);
 }

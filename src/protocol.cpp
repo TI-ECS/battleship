@@ -55,12 +55,6 @@ public:
 
     virtual void visit(const RejectMessage& msg) { setType(msg); }
 
-    virtual void visit(const NickMessage& msg)
-    {
-        setType(msg);
-        ADD_FIELD(msg, nickname);
-    }
-
     virtual void visit(const BeginMessage& msg) { setType(msg); }
 
     virtual void visit(const MoveMessage& msg)
@@ -100,13 +94,6 @@ public:
     virtual void visit(const RestartMessage& msg)
     {
         setType(msg);
-    }
-
-    virtual void visit(const ChatMessage& msg)
-    {
-        setType(msg);
-        ADD_FIELD(msg, chat);
-        ADD_FIELD(msg, nickname);
     }
 };
 
@@ -177,11 +164,6 @@ MessagePtr Protocol::parseMessage(const QString& xmlMessage)
             DEF_ELEMENT(reason);
             return MessagePtr(new RejectMessage(kmversion == "true", reason));
         }
-    case NickMessage::MSGTYPE:
-        {
-            DEF_ELEMENT(nickname);
-            return MessagePtr(new NickMessage(nickname));
-        }
     case BeginMessage::MSGTYPE:
         return MessagePtr(new BeginMessage);
     case MoveMessage::MSGTYPE:
@@ -229,12 +211,6 @@ MessagePtr Protocol::parseMessage(const QString& xmlMessage)
         }
     case RestartMessage::MSGTYPE:
         return MessagePtr(new RestartMessage());
-    case ChatMessage::MSGTYPE:
-        {
-            DEF_ELEMENT(nickname);
-            DEF_ELEMENT(chat);
-            return MessagePtr(new ChatMessage(nickname, chat));
-        }
     default:
         emit parseError("Unknown message type");
         return MessagePtr();

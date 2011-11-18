@@ -61,8 +61,6 @@ Controller* PlayField::createController()
             this, SLOT(gameAbort()));
     connect(controller, SIGNAL(restartRequested()),
             this, SLOT(restartRequested()));
-    connect(controller, SIGNAL(compatibility(int)),
-            this, SLOT(setCompatibility(int)));
     connect(controller, SIGNAL(turnChanged(int)),
             this, SLOT(changeTurn(int)));
     connect(controller, SIGNAL(playerReady(int)),
@@ -226,11 +224,6 @@ void PlayField::createClient()
 {
     createAuxMenu()->createClient();
 }
-
-// void PlayField::createClient(const KUrl& url)
-// {
-//     createAuxMenu()->createClient(url);
-// }
 
 void PlayField::toggleEndOfGameMessage(bool show)
 {

@@ -50,13 +50,10 @@ public:
 public slots:
     void shoot(int player, const Coord& c);
     void ready(int player);
-    void nick(int player, const QString& nick);
 signals:
     void gameAbort();
     void gameOver(Sea::Player);
     void restartRequested();
-    void compatibility(int);
-    void nickChanged(int, const QString&);
     void turnChanged(int);
     void playerReady(int); // -1 means all players are ready
 };
