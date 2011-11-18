@@ -52,6 +52,7 @@ public slots:
     void ready(int player);
     void nick(int player, const QString& nick);
 signals:
+    void gameAbort();
     void gameOver(Sea::Player);
     void restartRequested();
     void compatibility(int);

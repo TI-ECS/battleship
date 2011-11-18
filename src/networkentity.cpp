@@ -94,11 +94,6 @@ void NetworkEntity::notifyChat(const Entity* entity, const QString& text)
     }
 }
 
-void NetworkEntity::notifyAbort()
-{
-    // TODO: close connection
-}
-
 void NetworkEntity::hit(Shot* shot)
 {
     if (shot->player() != m_player

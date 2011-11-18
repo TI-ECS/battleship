@@ -20,6 +20,7 @@
 
 #include <QMessageBox>
 #include <QStatusBar>
+#include <QTimer>
 #include <QVBoxLayout>
 
 static const int MINIMUM_HEIGHT = 400;
@@ -56,6 +57,8 @@ Controller* PlayField::createController()
     Controller* controller = new Controller(this);
     connect(controller, SIGNAL(gameOver(Sea::Player)),
             this, SLOT(gameOver(Sea::Player)));
+    connect(controller, SIGNAL(gameAbort()),
+            this, SLOT(gameAbort()));
     connect(controller, SIGNAL(restartRequested()),
             this, SLOT(restartRequested()));
     connect(controller, SIGNAL(compatibility(int)),
@@ -104,6 +107,7 @@ void PlayField::endGame()
 {
     Animator::instance()->restart();
     delete m_controller;
+
     m_controller = 0;
     m_sea->clear();
 }
@@ -241,4 +245,13 @@ void PlayField::toggleLeftGrid(bool show)
 void PlayField::toggleRightGrid(bool show)
 {
     m_sea->toggleRightGrid(show);
+}
+
+void PlayField::gameAbort()
+{
+    m_status_bar->showMessage(tr("Game aborted!"));
+    QMessageBox::information(this, tr("Result"),
+                             tr("Your opponent disconnected from the game"));
+
+    QTimer::singleShot(0, this, SLOT(newGame()));
 }

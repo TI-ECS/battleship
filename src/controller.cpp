@@ -62,17 +62,14 @@ void Controller::setupEntity(Entity* entity)
             this, SLOT(nick(int,QString)));
     connect(entity, SIGNAL(compatibility(int)),
             this, SIGNAL(compatibility(int)));
+    connect(entity, SIGNAL(abortGame()),
+            this, SIGNAL(gameAbort()));
 
     foreach (Entity* e, m_entities) {
         connect(e, SIGNAL(compatibility(int)),
                 entity, SLOT(setCompatibilityLevel(int)));
         connect(entity, SIGNAL(compatibility(int)),
                 e, SLOT(setCompatibilityLevel(int)));
-
-        connect(e, SIGNAL(abortGame()),
-                entity, SLOT(notifyAbort()));
-        connect(entity, SIGNAL(abortGame()),
-                e, SLOT(notifyAbort()));
     }
 
     m_entities.append(entity);

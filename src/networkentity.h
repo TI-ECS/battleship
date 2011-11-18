@@ -39,7 +39,6 @@ public:
     virtual QIcon icon() const;
 private slots:
     void received(MessagePtr msg);
-    virtual void notifyAbort();
 protected:
     virtual void visit(const HeaderMessage& msg);
     virtual void visit(const RejectMessage& msg);

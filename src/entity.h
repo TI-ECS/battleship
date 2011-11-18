@@ -60,7 +60,6 @@ signals:
     void abortGame();
 public slots:
     virtual void setCompatibilityLevel(int level);
-    virtual void notifyAbort() = 0;
 };
 
 #endif // ENTITY_H

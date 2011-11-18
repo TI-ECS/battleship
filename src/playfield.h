@@ -38,6 +38,7 @@ public:
     ~PlayField();
     /* void createClient(const KUrl& url); */
 public slots:
+    void gameAbort();
     void gameOver(Sea::Player winner);
     void setupController();
 

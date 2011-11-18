@@ -152,12 +152,6 @@ void PlayerEntity::registerMiss(Sea::Player player, const Coord&)
     }
 }
 
-void PlayerEntity::notifyAbort()
-{
-    // TODO
-    // m_chat->display(i18n("Your opponent disconnected from the game"));
-}
-
 void PlayerEntity::setNick(const QString& nick)
 {
     UIEntity::setNick(nick);
