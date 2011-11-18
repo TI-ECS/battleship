@@ -28,11 +28,15 @@ void ClientNetworkDialog::accept()
     service = comboBox->itemData(comboBox->currentIndex(),
                                  DNSSD::ServiceModel::ServicePtrRole).
         value<DNSSD::RemoteService::Ptr>();
-    service.data()->resolve();
-    hostname = service.data()->hostName().remove(".local");
-    port = service.data()->port();
 
-    QDialog::accept();
+    if (service) {
+        service.data()->resolve();
+        hostname = service.data()->hostName().remove(".local");
+        port = service.data()->port();
+        QDialog::accept();
+    } else {
+        QDialog::reject();
+    }
 }
 
 QString ClientNetworkDialog::getHostName() const
