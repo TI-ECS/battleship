@@ -19,7 +19,6 @@ class Button;
 class QTcpSocket;
 class Entity;
 class Protocol;
-namespace DNSSD { class PublicService; }
 
 class SimpleMenu : public QObject
 {
@@ -31,8 +30,6 @@ Q_OBJECT
 
     Protocol* m_protocol;
     QString m_nickname;
-
-    DNSSD::PublicService* m_publisher;
 
     enum State
     {

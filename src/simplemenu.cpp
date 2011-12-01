@@ -22,6 +22,8 @@
 #include "servicemodel.h"
 #include "welcomescreen.h"
 
+#include "wpa/wpap2p.h"
+
 #include <QHostInfo>
 #include <QIcon>
 #include <QMessageBox>
@@ -39,7 +41,6 @@ SimpleMenu::SimpleMenu(QWidget* parent, WelcomeScreen* screen)
 , m_player1(0)
 , m_player2(0)
 {
-    m_publisher = NULL;
     if (m_screen) {
         // create buttons
         m_server_btn = m_screen->addButton(0, 0, QIcon(QLatin1String(iconServer)),
@@ -74,31 +75,30 @@ void SimpleMenu::createServer()
     QWidget* parent_widget = qobject_cast<QWidget*>(parent());
     Q_ASSERT(parent_widget);
 
-    QTcpServer s(this);
-    if (!m_publisher)
-        m_publisher = new DNSSD::PublicService(QHostInfo::localHostName(), "_battleship._tcp", 1234);
-    m_publisher->publishAsync();
+    WPAp2p::setInterfaceIp("192.168.1.1");
     QMessageBox dialog(parent_widget);
     dialog.setText("Waiting for other player to connect...");
+    if (!WPAp2p::startGroupServer(QHostInfo::localHostName()))
+        return;
     dialog.addButton(QMessageBox::Cancel);
-    connect(&s, SIGNAL(newConnection()), &dialog, SLOT(accept()));
 
+    QTcpServer s(this);
+    connect(&s, SIGNAL(newConnection()), &dialog, SLOT(accept()));
     s.listen(QHostAddress::Any, 1234);
     if(dialog.exec() == QDialog::Accepted)
         finalize(DONE_SERVER, tr("Me"), s.nextPendingConnection());
     else
-        m_publisher->stop();
+        qDebug() << "Stop group";
 }
 
 void SimpleMenu::createClient()
 {
-    QWidget* parent_widget = qobject_cast<QWidget*>(parent());
-    Q_ASSERT(parent_widget);
-    QTcpSocket *s = new QTcpSocket(this);
-
+    WPAp2p::setInterfaceIp("192.168.1.2");
     ClientNetworkDialog dialog;
     if(dialog.exec())
     {
+        qDebug() << "connect";
+        QTcpSocket *s = new QTcpSocket(this);
         s->connectToHost(dialog.getHostName(), dialog.getPort());
         if(s->waitForConnected(-1))
             finalize(DONE_CLIENT, tr("Me"), s);

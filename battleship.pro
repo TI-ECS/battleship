@@ -95,7 +95,10 @@ HEADERS += src/animation.h \
            src/stats.h \
            src/statswidget.h \
            src/uientity.h \
-           src/welcomescreen.h
+           src/welcomescreen.h \
+           src/wpa/device.h \
+           src/wpa/p2pservicemodel.h \
+           src/wpa/wpap2p.h
 
 SOURCES += src/animation.cpp \
            src/animator.cpp \
@@ -146,4 +149,7 @@ SOURCES += src/animation.cpp \
            src/stats.cpp \
            src/statswidget.cpp \
            src/uientity.cpp \
-           src/welcomescreen.cpp
+           src/welcomescreen.cpp \
+           src/wpa/device.cpp \
+           src/wpa/p2pservicemodel.cpp \
+           src/wpa/wpap2p.cpp

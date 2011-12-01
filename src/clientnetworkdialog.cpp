@@ -1,41 +1,43 @@
 #include "clientnetworkdialog.h"
 
-#include "remoteservice.h"
-#include "servicebrowser.h"
-#include "servicemodel.h"
+#include "wpa/device.h"
+#include "wpa/p2pservicemodel.h"
+#include "wpa/wpap2p.h"
 #include "ui_clientnetworkdialog.h"
+
+#include <QDebug>
 
 ClientNetworkDialog::ClientNetworkDialog(QWidget *parent) :
     QDialog(parent, Qt::Dialog)
 {
     setupUi(this);
+    comboBox->setModel(new P2PServiceModel(this));
 
-    browser = new DNSSD::ServiceBrowser("_battleship._tcp", true);
-    comboBox->setModel(new DNSSD::ServiceModel(browser, this));
-
-    connect(buttonBox, SIGNAL(accepted()), SLOT(accept()));
+    connect(buttonBox, SIGNAL(accepted()), SLOT(startConnection()));
     connect(buttonBox, SIGNAL(rejected()), SLOT(reject()));
 }
 
+
 ClientNetworkDialog::~ClientNetworkDialog()
 {
-    delete browser;
 }
 
-void ClientNetworkDialog::accept()
+void ClientNetworkDialog::startConnection()
 {
-    DNSSD::RemoteService::Ptr service;
-    service = comboBox->itemData(comboBox->currentIndex(),
-                                 DNSSD::ServiceModel::ServicePtrRole).
-        value<DNSSD::RemoteService::Ptr>();
+    Device *device;
+    device = comboBox->itemData(comboBox->currentIndex(),
+                                Qt::UserRole).
+        value<Device *>();
 
-    if (service) {
-        service.data()->resolve();
-        hostname = service.data()->hostName().remove(".local");
-        port = service.data()->port();
-        QDialog::accept();
+    qDebug() << "is accept called twice ?";
+    port = device->number().toInt();
+    // TODO: Change it to get dynamic ip
+    hostname = "192.168.1.1"; 	// for now, we're harcoding the ip.
+    if (device) {
+        WPAp2p::connectToGroup(device->address());
+        QDialog::Accepted;
     } else {
-        QDialog::reject();
+        QDialog::Rejected;
     }
 }
 
