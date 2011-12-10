@@ -28,7 +28,14 @@ isEmpty(INSTALLDIR) {
 message ("The application will be installed in $$INSTALLDIR")
 
 target.path = $$INSTALLDIR/usr/bin
-INSTALLS += target
+
+images.path = $$INSTALLDIR/usr/share/matrix/images
+images.files = data/battleship-icon.png
+
+scripts.path = $$INSTALLDIR/usr/bin
+scripts.files = scripts/*
+
+INSTALLS += target images scripts
 
 FORMS += ui/mainwindow.ui \
          ui/clientnetworkdialog.ui
