@@ -1,8 +1,6 @@
 #include "clientnetworkdialog.h"
 
 #include "wpa/device.h"
-#include "wpa/p2pservicemodel.h"
-#include "wpa/wpap2p.h"
 #include "ui_clientnetworkdialog.h"
 
 #include <QDebug>
@@ -11,7 +9,8 @@ ClientNetworkDialog::ClientNetworkDialog(QWidget *parent) :
     QDialog(parent, Qt::Dialog)
 {
     setupUi(this);
-    comboBox->setModel(new P2PServiceModel(this));
+    model = new P2PServiceModel(this);
+    comboBox->setModel(model);
 
     connect(buttonBox, SIGNAL(accepted()), SLOT(startConnection()));
     connect(buttonBox, SIGNAL(rejected()), SLOT(reject()));
@@ -24,17 +23,16 @@ ClientNetworkDialog::~ClientNetworkDialog()
 
 void ClientNetworkDialog::startConnection()
 {
+    int pos = comboBox->currentIndex();
+    port = 1234;
+    hostname = "192.168.0.1";
     Device *device;
     device = comboBox->itemData(comboBox->currentIndex(),
                                 Qt::UserRole).
         value<Device *>();
 
-    qDebug() << "is accept called twice ?";
-    port = device->number().toInt();
-    // TODO: Change it to get dynamic ip
-    hostname = "192.168.1.1"; 	// for now, we're harcoding the ip.
     if (device) {
-        WPAp2p::connectToGroup(device->address());
+        model->connectToItem(comboBox->currentIndex());
         QDialog::Accepted;
     } else {
         QDialog::Rejected;

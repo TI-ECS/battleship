@@ -12,6 +12,8 @@
 
 #include <QObject>
 
+#include "clientnetworkdialog.h"
+
 class WelcomeScreen;
 class Controller;
 class SeaView;
@@ -19,6 +21,7 @@ class Button;
 class QTcpSocket;
 class Entity;
 class Protocol;
+class Wpa;
 
 class SimpleMenu : public QObject
 {
@@ -40,6 +43,8 @@ Q_OBJECT
 
     Entity* m_player1;
     Entity* m_player2;
+    ClientNetworkDialog dialog;
+    Wpa *wpa;
 
     void finalize(State, const QString& nick, QTcpSocket* socket = 0);
 public:
@@ -57,6 +62,8 @@ public:
 public slots:
     void createServer();
     void createClient();
+private slots:
+    void connectToHost(bool go);
 signals:
     void done();
 };

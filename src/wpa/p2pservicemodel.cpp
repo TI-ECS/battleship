@@ -1,7 +1,7 @@
 #include "p2pservicemodel.h"
 
 #include "device.h"
-#include "wpap2p.h"
+#include "wpa.h"
 
 #include <QDebug>
 
@@ -9,22 +9,23 @@ P2PServiceModel::P2PServiceModel(QObject* parent)
     :QAbstractItemModel(parent),
      devices()
 {
-    wpa = new WPAp2p;
+    wpa = new Wpa;
     wpa->setEnabled(true);
 
-    connect(wpa, SIGNAL(deviceFound(QSharedPointer<Device>)),
-            this, SLOT(deviceAppear(QSharedPointer<Device>)));
+    connect(wpa, SIGNAL(deviceFound(Device&)),
+            this, SLOT(deviceAppear(Device&)));
 
-    wpa->start();
-    wpa->scan();
+    wpa->getPeers();
 }
 
 P2PServiceModel::~P2PServiceModel()
 {
-    wpa->stop();
-    wpa->wait(2500000);
-
     delete wpa;
+
+    foreach (Device *d, devices)
+        delete d;
+
+    devices.clear();
 }
 
 int P2PServiceModel::columnCount(const QModelIndex&) const
@@ -58,17 +59,17 @@ QVariant P2PServiceModel::data(const QModelIndex& index, int role  ) const
         return QVariant();
 
     if (role == Qt::DisplayRole) {
-        Device *it =  devices.at(index.row()).data();
+        Device *it =  devices.at(index.row());
         if (it->name().isEmpty())
             return QVariant(it->address());
         else
             return QVariant(it->name());
     } else if (role == Qt::UserRole) {
-        return qVariantFromValue<Device*>(devices.at(index.row()).data());
+        return qVariantFromValue<Device*>(devices.at(index.row()));
     } else if (role == Qt::UserRole + 1) {
-        return QVariant(devices.at(index.row()).data()->address());
+        return QVariant(devices.at(index.row())->address());
     } else if (role == Qt::UserRole + 2) {
-        return QVariant(devices.at(index.row()).data()->name());
+        return QVariant(devices.at(index.row())->name());
     } else
         return QVariant();
 }
@@ -78,16 +79,36 @@ QVariant P2PServiceModel::headerData(int section, Qt::Orientation orientation, i
     return QVariant();
 }
 
-void P2PServiceModel::deviceAppear(QSharedPointer<Device> dev)
+void P2PServiceModel::deviceAppear(Device &device)
 {
-    int items = devices.count();
-    foreach (QSharedPointer<Device> aux, devices)
-        if (aux.data() == dev.data())
+    foreach(Device *dev, devices)
+        if (dev->address() == device.address())
             return;
 
-    if (dev.data()->manufacturer() == "battleship") {
-        this->devices.append(dev);
-        emit dataChanged(this->createIndex(items, 0),
-                         this->createIndex(items + 1, 0));
-    }
+    int pos = devices.count();
+    Device *d = new Device(device);
+
+    devices.append(d);
+    connect(d, SIGNAL(valueChanged(Device *)), this,
+            SLOT(deviceItemChanged(Device *)));
+
+    emit dataChanged(this->createIndex(pos, 0),
+                     this->createIndex(pos + 1, 0));
+}
+
+
+void P2PServiceModel::connectToItem(int pos)
+{
+    Device *d = devices.at(pos);
+
+    QVariantMap properties;
+    properties["address"] = d->address();
+    properties["go_intent"] = 0;
+    properties["join"] = true;
+    properties["pincode"] = "";
+    properties["method"] = "pbc";
+
+    qDebug() << properties;
+
+    wpa->connectPeer(properties);
 }

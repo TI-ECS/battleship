@@ -98,7 +98,14 @@ HEADERS += src/animation.h \
            src/welcomescreen.h \
            src/wpa/device.h \
            src/wpa/p2pservicemodel.h \
-           src/wpa/wpap2p.h
+           src/wpa/group.h              \
+           src/wpa/interface.h          \
+           src/wpa/interfaces.h         \
+           src/wpa/p2pdevice.h          \
+           src/wpa/peer.h               \
+           src/wpa/types.h              \
+           src/wpa/wpa.h                \
+           src/wpa/wps.h
 
 SOURCES += src/animation.cpp \
            src/animator.cpp \
@@ -151,5 +158,11 @@ SOURCES += src/animation.cpp \
            src/uientity.cpp \
            src/welcomescreen.cpp \
            src/wpa/device.cpp \
+           src/wpa/group.cpp              \
+           src/wpa/interface.cpp          \
+           src/wpa/interfaces.cpp         \
            src/wpa/p2pservicemodel.cpp \
-           src/wpa/wpap2p.cpp
+           src/wpa/p2pdevice.cpp          \
+           src/wpa/peer.cpp               \
+           src/wpa/wpa.cpp                \
+           src/wpa/wps.cpp
