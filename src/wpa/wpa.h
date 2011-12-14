@@ -25,6 +25,7 @@ public slots:
     void setDeviceName(const QString &deviceName);
     void setProperties(const QVariantMap &properties);
     void startGroup();
+    QString status();
     void stopGroup();
     void getPeers();
     QString getStatus();

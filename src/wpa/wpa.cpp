@@ -358,6 +358,11 @@ void Wpa::setDeviceName(const QString &deviceName)
    p2pInterface->setP2PDeviceProperties(args);
 }
 
+QString Wpa::status()
+{
+    return device->state();
+}
+
 void Wpa::provisionDiscoveryPBCRequest(const QDBusObjectPath &peer_object)
 {
     QVariantMap args;
