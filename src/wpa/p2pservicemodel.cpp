@@ -89,8 +89,6 @@ void P2PServiceModel::deviceAppear(Device &device)
     Device *d = new Device(device);
 
     devices.append(d);
-    connect(d, SIGNAL(valueChanged(Device *)), this,
-            SLOT(deviceItemChanged(Device *)));
 
     emit dataChanged(this->createIndex(pos, 0),
                      this->createIndex(pos + 1, 0));
