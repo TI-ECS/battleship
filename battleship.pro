@@ -1,8 +1,8 @@
 TEMPLATE = app
 
 QT += dbus gui svg xml network
-DEPENDPATH += . src src/dnssd
-INCLUDEPATH += . src src/dnssd
+DEPENDPATH += . src src/wpa
+INCLUDEPATH += . src src/wpa
 
 RCC_DIR = tmp
 UI_DIR = tmp
@@ -50,28 +50,6 @@ HEADERS += src/animation.h \
            src/controller.h \
            src/coord.h \
            src/delegate.h \
-           src/dnssd/avahi-domainbrowser_p.h \
-           src/dnssd/avahi-publicservice_p.h \
-           src/dnssd/avahi-remoteservice_p.h \
-           src/dnssd/avahi-servicebrowser_p.h \
-           src/dnssd/avahi-servicetypebrowser_p.h \
-           src/dnssd/avahi_domainbrowser_interface.h \
-           src/dnssd/avahi_entrygroup_interface.h \
-           src/dnssd/avahi_server_interface.h \
-           src/dnssd/avahi_servicebrowser_interface.h \
-           src/dnssd/avahi_serviceresolver_interface.h \
-           src/dnssd/avahi_servicetypebrowser_interface.h \
-           src/dnssd/dnssd_export.h \
-           src/dnssd/domainbrowser.h \
-           src/dnssd/domainmodel.h \
-           src/dnssd/kdemacros.h \
-           src/dnssd/publicservice.h \
-           src/dnssd/remoteservice.h \
-           src/dnssd/servicebase.h \
-           src/dnssd/servicebase_p.h \
-           src/dnssd/servicebrowser.h \
-           src/dnssd/servicemodel.h \
-           src/dnssd/servicetypebrowser.h \
            src/element.h \
            src/entity.h \
            src/grid.h \
@@ -123,20 +101,6 @@ SOURCES += src/animation.cpp \
            src/colorproxy_p.cpp \
            src/controller.cpp \
            src/coord.cpp \
-           src/dnssd/avahi-domainbrowser.cpp \
-           src/dnssd/avahi-publicservice.cpp \
-           src/dnssd/avahi-remoteservice.cpp \
-           src/dnssd/avahi-servicebrowser.cpp \
-           src/dnssd/avahi-servicetypebrowser.cpp \
-           src/dnssd/avahi_domainbrowser_interface.cpp \
-           src/dnssd/avahi_entrygroup_interface.cpp \
-           src/dnssd/avahi_server_interface.cpp \
-           src/dnssd/avahi_servicebrowser_interface.cpp \
-           src/dnssd/avahi_serviceresolver_interface.cpp \
-           src/dnssd/avahi_servicetypebrowser_interface.cpp \
-           src/dnssd/domainmodel.cpp \
-           src/dnssd/servicebase.cpp \
-           src/dnssd/servicemodel.cpp \
            src/element.cpp \
            src/entity.cpp \
            src/kbsrenderer.cpp \

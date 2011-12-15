@@ -15,11 +15,7 @@
 #include "networkentity.h"
 #include "playerentity.h"
 #include "protocol.h"
-#include "publicservice.h"
-#include "remoteservice.h"
 #include "seaview.h"
-#include "servicebrowser.h"
-#include "servicemodel.h"
 #include "welcomescreen.h"
 
 #include "wpa/wpa.h"
