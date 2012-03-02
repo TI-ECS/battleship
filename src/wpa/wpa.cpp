@@ -69,7 +69,6 @@ Q_PID proc_find(const QString &name)
 Wpa::Wpa(QObject *parent)
     :QObject(parent)
 {
-    group = NULL;
     wpaPid = proc_find(wpa_process_name);
     if (wpaPid != -1) {
         enabled(true);
@@ -99,7 +98,7 @@ void Wpa::connectPeer(const QVariantMap &properties)
     QDBusObjectPath peer(p);
     QVariantMap args;
     args["peer"] = qVariantFromValue(peer);
-    args["persistent"] = false;
+    // args["persistent"] = true;
     // args["frequency"] = DEFAULT_FREQUENCY;
     args["join"] = join;
     args["wps_method"] = method;
@@ -119,8 +118,6 @@ void Wpa::connectResult(QDBusPendingCallWatcher *watcher)
     if (!reply.isValid()) {
         qDebug() << "Connect Fails: " << reply.error().name();
         qDebug() << reply.error().message();
-    } else {
-        QProcess::startDetached("/usr/bin/wifi_init.sh");
     }
 }
 
@@ -193,32 +190,20 @@ void Wpa::getPeers()
 
 void Wpa::groupHasStarted(const QVariantMap &properties)
 {
-    if (group) {
-        group->disconnect();
-        delete group;
-    }
-
-    group = new Group(wpa_service, properties.value("network_object").
-                      value<QDBusObjectPath>().path(),
-                      QDBusConnection::systemBus());
-    connect(group, SIGNAL(PeerJoined(const QDBusObjectPath&)), this,
-            SLOT(peerJoined(const QDBusObjectPath&)));
-
     bool go = properties.value("role").toString() == "GO";
     if (go) {
         QStringList args;
         args << "server";
-        QProcess::startDetached("/usr/bin/wifi_init.sh", args);
+        // this method is called twice, that's the reason of
+        // this hack
+        Q_PID p = proc_find("udhcpd");
+        if (p == -1)
+            QProcess::startDetached("/usr/bin/wifi_init.sh", args);
     } else {
         QProcess::startDetached("/usr/bin/wifi_init.sh");
     }
 
     emit groupStarted(go);
-}
-
-void Wpa::groupHasFinished(const QString &ifname, const QString &role)
-{
-    emit groupFinished();
 }
 
 void Wpa::groupStartResult(QDBusPendingCallWatcher *watcher)
@@ -235,11 +220,6 @@ void Wpa::groupStartResult(QDBusPendingCallWatcher *watcher)
 bool Wpa::isEnabled()
 {
     return (wpaPid == -1) ? false : true;
-}
-
-void Wpa::peerJoined(const QDBusObjectPath &peer)
-{
-    qDebug() << "peer connected: " << peer.path();
 }
 
 void Wpa::setEnabled(bool enable)
@@ -287,14 +267,8 @@ void Wpa::setupDBus()
             this, SLOT(deviceWasFound(const QDBusObjectPath&)));
     connect(p2pInterface, SIGNAL(GroupStarted(const QVariantMap&)),
             this, SLOT(groupHasStarted(const QVariantMap&)));
-    connect(p2pInterface, SIGNAL(GroupFinished(const QString&, const QString&)),
-            this, SLOT(groupHasFinished(const QString&, const QString&)));
-    connect(p2pInterface, SIGNAL(P2PStateChanged(const QStringMap&)),
-            this, SLOT(stateChanged(const QStringMap&)));
     connect(p2pInterface, SIGNAL(GONegotiationFailure(int)), this,
             SLOT(goNegotiationFailure(int)));
-    connect(p2pInterface, SIGNAL(GONegotiationRequest(const QDBusObjectPath&,int)),
-            this, SLOT(goNegotiationRequest(const QDBusObjectPath&, int)));
     connect(p2pInterface, SIGNAL(ProvisionDiscoveryPBCRequest(const QDBusObjectPath&)),
             this, SLOT(provisionDiscoveryPBCRequest(const QDBusObjectPath&)));
 
@@ -305,16 +279,11 @@ void Wpa::setupDBus()
     find();
 }
 
-void Wpa::stateChanged(const QStringMap &states)
-{
-    qDebug() << "states: " << states.keys();
-}
-
 void Wpa::startGroup()
 {
     QDBusPendingCallWatcher *watcher;
     QVariantMap args;
-    args["persistent"] = true;
+    // args["persistent"] = ;
     // args["frequency"] = 2;
     watcher = new QDBusPendingCallWatcher(p2pInterface->GroupAdd(args), this);
     connect(watcher, SIGNAL(finished(QDBusPendingCallWatcher*)),
@@ -331,13 +300,6 @@ void Wpa::stopGroup()
 void Wpa::goNegotiationFailure(int status)
 {
     emit connectFails(status);
-}
-
-void Wpa::goNegotiationRequest(const QDBusObjectPath &path, int dev_passwd_id)
-{
-    qDebug() << "goNegotiationRequest";
-    qDebug() << "Request: " << path.path();
-    qDebug() << "Passwd id " << dev_passwd_id;
 }
 
 void Wpa::devicePropertiesChanged(const QVariantMap &properties)

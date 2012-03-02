@@ -20,12 +20,13 @@ P2PServiceModel::P2PServiceModel(QObject* parent)
 
 P2PServiceModel::~P2PServiceModel()
 {
-    delete wpa;
-
     foreach (Device *d, devices)
         delete d;
 
     devices.clear();
+
+    wpa->disconnect();
+    delete wpa;
 }
 
 int P2PServiceModel::columnCount(const QModelIndex&) const
@@ -105,8 +106,6 @@ void P2PServiceModel::connectToItem(int pos)
     properties["join"] = true;
     properties["pincode"] = "";
     properties["method"] = "pbc";
-
-    qDebug() << properties;
 
     wpa->connectPeer(properties);
 }
