@@ -98,7 +98,13 @@ void SimpleMenu::createServer()
     if (dialog.exec() == QDialog::Accepted)
         finalize(DONE_SERVER, tr("Me"), s.nextPendingConnection());
     else if (wpa->status() == "completed")
-            wpa->stopGroup();
+        gameAbort();
+}
+
+void SimpleMenu::gameAbort()
+{
+    wpa->stopGroup();
+    wpa->disconnectP2P();
 }
 
 void SimpleMenu::createClient()
@@ -153,9 +159,9 @@ void SimpleMenu::connectToHost(bool go)
     sleep(4); // Hack for p2p, it lets the wifi-direct do its job
 
     if (!go) {
-	QTcpSocket *s = new QTcpSocket(this);
-	s->connectToHost("192.168.0.1", 1234);
-	if (s->waitForConnected(-1))
+        QTcpSocket *s = new QTcpSocket(this);
+        s->connectToHost("192.168.0.1", 1234);
+        if (s->waitForConnected(-1))
             finalize(DONE_CLIENT, tr("Me"), s);
     }
 }

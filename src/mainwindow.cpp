@@ -3,6 +3,7 @@
 #include "playfield.h"
 
 #include <QAction>
+#include <QProcess>
 #include <QToolBar>
 
 MainWindow::MainWindow(QWidget *parent, Qt::WindowFlags flags)
@@ -55,11 +56,12 @@ void MainWindow::newGame()
 
 void MainWindow::restartGame()
 {
-    if(m_started)
+    if (m_started)
         m_main->restart();
 }
 
 void MainWindow::quit()
 {
+    QProcess::execute("/usr/bin/wifi_exit.sh");
     close();
 }

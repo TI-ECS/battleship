@@ -60,6 +60,7 @@ public:
 public slots:
     void createServer();
     void createClient();
+    void gameAbort();
 private slots:
     void connectToHost(bool go);
 signals:

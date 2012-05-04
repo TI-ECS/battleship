@@ -119,6 +119,7 @@ void PlayField::newGame()
 
     m_menu = new SimpleMenu(this, m_sea->screen(Sea::Player(0)));
     connect(m_menu, SIGNAL(done()), this, SLOT(setupController()));
+    connect(this, SIGNAL(gameAborted()), m_menu, SLOT(gameAbort()));
 
     emit welcomeScreen();
 }
@@ -249,4 +250,6 @@ void PlayField::gameAbort()
                              tr("Your opponent disconnected from the game"));
 
     QTimer::singleShot(0, this, SLOT(newGame()));
+
+    emit gameAborted();
 }

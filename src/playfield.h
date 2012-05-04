@@ -60,6 +60,7 @@ signals:
     void welcomeScreen();
     void startingGame();
     void rotate();
+    void gameAborted();
 };
 
 #endif // PLAYFIELD_H

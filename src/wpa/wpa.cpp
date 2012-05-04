@@ -54,7 +54,9 @@ Q_PID proc_find(const QString &name)
 
         QFile file(QString("/proc/%1/cmdline").arg(lpid));
         if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-            QByteArray cmd = file.readLine();
+            QByteArray cmd = file.readAll();
+            cmd = cmd.replace('\0', ' ');
+            cmd.append('\0');
             if (cmd.contains(name.toAscii())) {
                 file.close();
                 return (Q_PID)lpid;
@@ -189,17 +191,21 @@ void Wpa::getPeers()
 
 void Wpa::groupHasStarted(const QVariantMap &properties)
 {
+    Q_PID pid;
     bool go = properties.value("role").toString() == "GO";
+
     if (go) {
         QStringList args;
         args << "server";
         // this method is called twice, that's the reason of
         // this hack
-        Q_PID p = proc_find("udhcpd");
-        if (p == -1)
-            QProcess::startDetached("/usr/bin/wifi_init.sh", args);
+        pid = proc_find("udhcpd");
+        if (pid == -1)
+            QProcess::execute("/usr/bin/wifi_init.sh", args);
     } else {
-        QProcess::startDetached("/usr/bin/wifi_init.sh");
+        pid = proc_find("udhcpc -i wlan0");
+        if (pid == -1)
+            QProcess::execute("/usr/bin/wifi_init.sh");
     }
 
     emit groupStarted(go);
@@ -236,6 +242,7 @@ void Wpa::setEnabled(bool enable)
         p2pInterface = NULL;
         kill(wpaPid, SIGKILL);
         wpaPid = -1;
+        QProcess::startDetached("/usr/bin/wifi_exit.sh");
         emit enabled(false);
     }
 }
@@ -292,6 +299,8 @@ void Wpa::stopGroup()
     QStringList args;
     args << "p2p_group_remove" << "wlan0";
     QProcess::execute("/usr/sbin/wpa_cli", args);
+
+    QProcess::startDetached("/usr/bin/wifi_exit.sh");
 }
 
 void Wpa::goNegotiationFailure(int status)
