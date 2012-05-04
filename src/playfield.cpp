@@ -87,6 +87,7 @@ void PlayField::resetupController(bool ask)
     if (old_opponent) {
         old_opponent->setParent(0);
     }
+
     delete m_controller;
 
     // create new controller
@@ -118,11 +119,15 @@ void PlayField::newGame()
 
     m_menu = new SimpleMenu(this, m_sea->screen(Sea::Player(0)));
     connect(m_menu, SIGNAL(done()), this, SLOT(setupController()));
+
     emit welcomeScreen();
 }
 
 void PlayField::restart(bool ask)
 {
+    if (!m_controller)
+        return;
+
     Animator::instance()->restart();
     m_sea->clear();
     resetupController(ask);
@@ -204,7 +209,6 @@ SimpleMenu* PlayField::createAuxMenu()
 
 void PlayField::auxMenuDone()
 {
-    qDebug() << "aux menu done";
     SimpleMenu* menu = qobject_cast<SimpleMenu*>(sender());
     if (menu) {
         delete m_menu;
