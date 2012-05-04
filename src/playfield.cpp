@@ -30,7 +30,6 @@ PlayField::PlayField(QWidget* parent, QStatusBar* sbar)
 , m_status_bar(sbar)
 , m_show_endofgame_message(true)
 {
-    // setMinimumSize(static_cast<int>(MINIMUM_HEIGHT * 1.6), MINIMUM_HEIGHT);
     QVBoxLayout* layout = new QVBoxLayout;
 
     m_sea = new SeaView(this);
@@ -38,7 +37,6 @@ PlayField::PlayField(QWidget* parent, QStatusBar* sbar)
     connect(this, SIGNAL(rotate()), m_sea, SLOT(rotate()));
 
     layout->setMargin(0);
-//     layout->setSpacing(0);
     setLayout(layout);
 
     m_controller = 0;

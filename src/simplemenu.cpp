@@ -66,13 +66,14 @@ void SimpleMenu::finalize(State state, const QString& nickname, QTcpSocket* sock
 {
     m_state = state;
     m_nickname = nickname;
+
     if (socket) {
         m_protocol = new Protocol(socket);
         m_protocol->setParent(this);
-    }
-    else {
+    } else {
         m_protocol = 0;
     }
+
     emit done();
 }
 
@@ -82,45 +83,49 @@ void SimpleMenu::createServer()
     Q_ASSERT(parent_widget);
 
     QMessageBox dialog(parent_widget);
+    QTcpServer s(this);
+
     dialog.setText("Waiting for other player to connect...");
     wpa->stopGroup();
     wpa->disconnectP2P();
     wpa->startGroup();
+
     dialog.addButton(QMessageBox::Cancel);
 
-    QTcpServer s(this);
     connect(&s, SIGNAL(newConnection()), &dialog, SLOT(accept()));
     s.listen(QHostAddress::Any, 1234);
+
     if (dialog.exec() == QDialog::Accepted)
         finalize(DONE_SERVER, tr("Me"), s.nextPendingConnection());
-    else {
-        if (wpa->status() == "completed")
+    else if (wpa->status() == "completed")
             wpa->stopGroup();
-    }
 }
 
 void SimpleMenu::createClient()
 {
     ClientNetworkDialog dialog;
+
     if(dialog.exec()) {
-	wpa->stopGroup();
-	wpa->disconnectP2P();
+        wpa->stopGroup();
+        wpa->disconnectP2P();
         connect(wpa, SIGNAL(groupStarted(bool)), this,
                 SLOT(connectToHost(bool)));
     }
 }
 
-void SimpleMenu::setupController(Controller* controller, Entity* old_opponent, SeaView* sea,
-                                 bool ask)
+void SimpleMenu::setupController(Controller* controller, Entity* old_opponent,
+                                 SeaView* sea, bool ask)
 {
     Q_UNUSED(old_opponent);
+
     switch (m_state) {
     case DONE_SERVER: {
         Q_ASSERT(m_protocol);
         m_player1 = controller->createPlayer(Sea::Player(0), sea, m_nickname);
         sea->setStats(Sea::Player(0), "score_mouse",
                       m_nickname, m_player1->stats());
-        m_player2 = controller->createRemotePlayer(Sea::Player(1), m_protocol, false);
+        m_player2 = controller->createRemotePlayer(Sea::Player(1),
+                                                   m_protocol, false);
         sea->setStats(Sea::Player(1), "score_network", tr("Opponent"),
                       m_player2->stats());
         break;
@@ -130,7 +135,8 @@ void SimpleMenu::setupController(Controller* controller, Entity* old_opponent, S
         m_player1 = controller->createPlayer(Sea::Player(0), sea, m_nickname);
         sea->setStats(Sea::Player(0), "score_mouse",
                       m_nickname, m_player1->stats());
-        m_player2 = controller->createRemotePlayer(Sea::Player(1), m_protocol, true);
+        m_player2 = controller->createRemotePlayer(Sea::Player(1),
+                                                   m_protocol, true);
         sea->setStats(Sea::Player(1), "score_network", tr("Opponent"),
                       m_player2->stats());
         break;
@@ -144,7 +150,8 @@ void SimpleMenu::setupController(Controller* controller, Entity* old_opponent, S
 
 void SimpleMenu::connectToHost(bool go)
 {
-    sleep(4);
+    sleep(4); // Hack for p2p, it lets the wifi-direct do its job
+
     if (!go) {
 	QTcpSocket *s = new QTcpSocket(this);
 	s->connectToHost("192.168.0.1", 1234);

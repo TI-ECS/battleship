@@ -8,8 +8,6 @@
 #include <signal.h>
 #include <sys/types.h>
 
-#define DEFAULT_FREQUENCY 2415     // 2.4GHZ
-
 using namespace fi::w1;
 using namespace fi::w1::wpa_supplicant;
 using namespace fi::w1::wpa_supplicant::Interface;
@@ -22,6 +20,8 @@ static const char dev_type[8] = {0x00, 0x09, 0x00, 0x50, 0xf2, 0x04, 0x00, 0x05}
 
 static bool isGameDevice(const QVariantMap &properties)
 {
+    Q_UNUSED(properties);
+
     return true;
 
     // TODO: It's the right way to do.
@@ -98,8 +98,6 @@ void Wpa::connectPeer(const QVariantMap &properties)
     QDBusObjectPath peer(p);
     QVariantMap args;
     args["peer"] = qVariantFromValue(peer);
-    // args["persistent"] = true;
-    // args["frequency"] = DEFAULT_FREQUENCY;
     args["join"] = join;
     args["wps_method"] = method;
     args["go_intent"] = go_intent;
@@ -150,14 +148,15 @@ void Wpa::disconnectResult(QDBusPendingCallWatcher *watcher)
     if (!reply.isValid()) {
         qDebug() << "Disconnect Fails: " << reply.error().name();
     } else {
-	emit disconnected();
+        emit disconnected();
     }
 }
 
 void Wpa::find()
 {
     QDBusPendingCallWatcher *watcher;
-    watcher = new QDBusPendingCallWatcher(p2pInterface->Find(QVariantMap()), this);
+    watcher = new QDBusPendingCallWatcher(p2pInterface->Find(QVariantMap()),
+                                          this);
     connect(watcher, SIGNAL(finished(QDBusPendingCallWatcher*)),
             this, SLOT(findResult(QDBusPendingCallWatcher*)));
 }
@@ -212,8 +211,7 @@ void Wpa::groupStartResult(QDBusPendingCallWatcher *watcher)
     QDBusPendingReply<> reply = *watcher;
     if (!reply.isValid()) {
         qDebug() << "Group Start Fails: " << reply.error().name();
-	emit groupStartFails();
-    } else {
+        emit groupStartFails();
     }
 }
 
@@ -269,7 +267,8 @@ void Wpa::setupDBus()
             this, SLOT(groupHasStarted(const QVariantMap&)));
     connect(p2pInterface, SIGNAL(GONegotiationFailure(int)), this,
             SLOT(goNegotiationFailure(int)));
-    connect(p2pInterface, SIGNAL(ProvisionDiscoveryPBCRequest(const QDBusObjectPath&)),
+    connect(p2pInterface, SIGNAL(ProvisionDiscoveryPBCRequest(
+                                     const QDBusObjectPath&)),
             this, SLOT(provisionDiscoveryPBCRequest(const QDBusObjectPath&)));
 
     wps = new WPS(wpa_service, interfacePath,
@@ -283,8 +282,6 @@ void Wpa::startGroup()
 {
     QDBusPendingCallWatcher *watcher;
     QVariantMap args;
-    // args["persistent"] = ;
-    // args["frequency"] = 2;
     watcher = new QDBusPendingCallWatcher(p2pInterface->GroupAdd(args), this);
     connect(watcher, SIGNAL(finished(QDBusPendingCallWatcher*)),
             this, SLOT(groupStartResult(QDBusPendingCallWatcher*)));
@@ -327,6 +324,8 @@ QString Wpa::status()
 
 void Wpa::provisionDiscoveryPBCRequest(const QDBusObjectPath &peer_object)
 {
+    Q_UNUSED(peer_object);
+
     QVariantMap args;
     args["Role"] = wps_role;
     args["Type"] = "pbc";
@@ -344,8 +343,6 @@ void Wpa::wpsResult(QDBusPendingCallWatcher *watcher)
     if (!reply.isValid()) {
         qDebug() << "WPS fails: " << reply.error().name();
         qDebug() << reply.error().message();
-        return;
-    } else {
     }
 }
 

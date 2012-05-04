@@ -23,20 +23,14 @@ ClientNetworkDialog::~ClientNetworkDialog()
 
 void ClientNetworkDialog::startConnection()
 {
-    int pos = comboBox->currentIndex();
     port = 1234;
     hostname = "192.168.0.1";
     Device *device;
     device = comboBox->itemData(comboBox->currentIndex(),
-                                Qt::UserRole).
-        value<Device *>();
+                                Qt::UserRole).value<Device *>();
 
-    if (device) {
+    if (device)
         model->connectToItem(comboBox->currentIndex());
-        QDialog::Accepted;
-    } else {
-        QDialog::Rejected;
-    }
 }
 
 QString ClientNetworkDialog::getHostName() const

@@ -34,8 +34,10 @@ int P2PServiceModel::columnCount(const QModelIndex&) const
     return 1;
 }
 
-int P2PServiceModel::rowCount(const QModelIndex& parent ) const
+int P2PServiceModel::rowCount(const QModelIndex& parent) const
 {
+    Q_UNUSED(parent);
+
     return devices.count();
 }
 
@@ -77,6 +79,10 @@ QVariant P2PServiceModel::data(const QModelIndex& index, int role  ) const
 
 QVariant P2PServiceModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
+    Q_UNUSED(section);
+    Q_UNUSED(orientation);
+    Q_UNUSED(role);
+
     return QVariant();
 }
 

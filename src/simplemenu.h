@@ -52,8 +52,6 @@ public:
 
     void setupController(Controller* controller, Entity* old_opponent,
                          SeaView* sea, bool ask = false);
-    /* TODO: implement it using avahi */
-    /* void createClient(const KUrl& url); */
 
     Entity* player(int p) { return p == 0 ? m_player1 : m_player2; }
 

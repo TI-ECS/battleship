@@ -32,12 +32,11 @@ void NetworkEntity::start(bool ask)
 {
     connect(m_protocol, SIGNAL(received(MessagePtr)), this, SLOT(received(MessagePtr)));
     connect(m_protocol, SIGNAL(disconnected()), this, SIGNAL(abortGame()));
-    if (ask) {
+
+    if (ask)
         m_protocol->send(MessagePtr(new RestartMessage()));
-    }
-    else {
+    else
         m_protocol->send(MessagePtr(new HeaderMessage()));
-    }
 }
 
 void NetworkEntity::notifyReady(Sea::Player player)
