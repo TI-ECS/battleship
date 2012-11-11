@@ -199,4 +199,4 @@ void KImageCache::setPixmapCacheLimit(int size)
     d->pixmapCache.setMaxCost(size);
 }
 
-#include "moc_kimagecache.cpp"
+#include "kimagecache.moc"
