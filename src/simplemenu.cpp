@@ -25,6 +25,7 @@
 #include <QMessageBox>
 #include <QTcpServer>
 #include <QTcpSocket>
+#include <unistd.h>
 
 const char* SimpleMenu::iconServer = ":/data/network-server.png";
 const char* SimpleMenu::iconClient = ":/data/network-connect.png";
